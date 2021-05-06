@@ -20,15 +20,15 @@ Updating the code to make it more easily interpretable and user-friendly is a wo
 ## Building
 
 The model is written in C++, using OpenMP to improve performance on multi-core processors. 
-C++ source and header files are located in the subdirectory "DengVaxSurvival", 
-and R output processing code can be found in the subdirectory "R". 
-
+C++ source and header files are located in the subdirectory [DengVaxSurvival](./DengVaxSurvival), 
+and R output processing code can be found in the subdirectory [R](./R). 
 
 ## Simulated Sample Data
 
 The directory [DengVaxSurvival/Data](./DengVaxSurvival/Data) contains simulated sample data 
-for our default model, and for models that separate cases by disease severity, as well as models 
-without serotype effects. 
+for our default model (`SimData.txt`), and for models that separate cases by disease severity 
+(`SimData_Hosp.txt` and `SimData_Severe.txt`), as well as models 
+without serotype effects (`SimData_NoSerotype.txt`). 
 
 ## Running
 
@@ -59,26 +59,26 @@ The output strings are long, unweildly and difficult to interpret. We apologise 
 and are working to make this less painful. 
 
 Our main model (with both age and serotype effects) has output string
-"VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU". 
+`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU`. 
 Model with age effects only has output string 
-"VAC_SILENT_PASSIVE_nENWX_FSKs3_AGSVEhetero_AS_Hazmult_fAdjHaz_prs1_2_SFU"
+`VAC_SILENT_PASSIVE_nENWX_FSKs3_AGSVEhetero_AS_Hazmult_fAdjHaz_prs1_2_SFU`
 Model with serotype effects only has output string 
-"VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_fAdjHaz_prs1_2_SFU"
+`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_fAdjHaz_prs1_2_SFU`
 Model with neither age nor serotype effects has output string 
-"VAC_SILENT_PASSIVE_nENWX_FSKs3_fAdjHaz_prs1_2_SFU".
+`VAC_SILENT_PASSIVE_nENWX_FSKs3_fAdjHaz_prs1_2_SFU`.
 
 The above models all assume the "vaccine-as-silent-infection" mechanism, and do not separate cases by disease severity. 
 The parameter file, 
-"Params_K_SEROPOS_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt", 
+`Params_K_SEROPOS_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`, 
 models a variant without such immune priming. 
 
 Finally, parameters that model hospitalised and non-hospitalised disease separately are given in 
-file "Params_VAC_SILENT_PASSIVE_nENW_MILDSEVERE_hospX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt".  
+file `Params_VAC_SILENT_PASSIVE_nENW_MILDSEVERE_hospX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`.  
 Modelling severe and non-severe disease separately can be accomplished using 
-"Params_VAC_SILENT_PASSIVE_nENW_MILDSEVEREX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt". 
-Please note that these parameter files use different simulated data files "SimData_Hosp.txt" and "SimData_Severe.txt"
+`Params_VAC_SILENT_PASSIVE_nENW_MILDSEVEREX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`. 
+Please note that these parameter files use different simulated data files `SimData_Hosp.txt` and `SimData_Severe.txt`
 Default output strings are created in the C++ function 
-StructureDefs.h::Housekeeping_Struct::CreateOutputString, and in the R function DirectoriesEtc.R::ChooseOutputString
+`StructureDefs.h::Housekeeping_Struct::CreateOutputString`, and in the R function `DirectoriesEtc.R::ChooseOutputString`
 
 ## Output
 
