@@ -807,26 +807,23 @@ struct Housekeeping_Struct {
 	}
 	string CreateDataFileName()
 	{
-		string DataFileName = ""; 
-
-		if ((SeroSpecificEfficacies) || (SeroSpecific_K_values)) SerotypeString = "_SeroSpec"; //// by definition, if doing case serotypes don't need single serotype data. 
-		if (MildAndSevere == TREATED_SEPARATELY)
+		string FolderString = "Data\\";
+		string DataFileName = "";
+		if (MildAndSevere == TREATED_EQUALLY)
 		{
-			DataFileName = SerotypeString + "_MildSevere";
-			if (ActiveOrPassivePhase == ACTIVE_PHASE_ONLY)  DataFileName = DataFileName + "_Active";
-			if (ModellingHospitalized)	DataFileName = DataFileName + "_UsingHosp";	
+			if ((SeroSpecificEfficacies) || (SeroSpecific_K_values))
+				DataFileName = "SimData.txt";
+			else
+				DataFileName = "SimData_NoSerotype.txt"; 
 		}
-		else DataFileName = SerotypeString;
-
-		string FolderString = "Data"; 
-		if (!SFU)					FolderString = FolderString + "Backup"; 
-		if (Include_Late_Cases)		FolderString = FolderString + "_LateCasesIncluded";
-		if (FakeExtObs)				FolderString = FolderString + "_FakeExtendedObservation";
-		FolderString = FolderString + "\\";
-	
-		DataFileName = FolderString + "DataCYD14_15" + DataFileName + ".txt";
-
-		return DataFileName; 
+		else
+		{
+			if (ModellingHospitalized == true)
+				DataFileName = "SimData_Hosp.txt";
+			else
+				DataFileName = "SimData_Severe.txt"; 
+		}
+		return FolderString + DataFileName;
 	}
 	string CreateOutputString(bool AddOutputStringExtra) // pass CountriesFittedString as an argument because otherwise have to pass Fit_c0, Fit_c1 etc. 
 	{
