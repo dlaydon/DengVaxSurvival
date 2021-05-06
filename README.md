@@ -33,10 +33,14 @@ without serotype effects.
 ## Running
 
 The target executable of the C++ source code is named "D_MCMC.exe".
-Syntax for running the executable is "D_MCMC.exe Params_ParticularModelSettings.txt"
-It is to be run on 
-If run locally, (can be done by turning off / commenting out #define USE_CLUSTER and #define USE_COMMAND_LINE macros in Macros.h)
-have set number of cores at 6 (in main.cpp)
+Syntax for running the executable is "D_MCMC.exe Params_ParticularModelSettings.txt".
+The code is heavily parallelized and will broadly run faster with more cores, ideally on a 
+high-performance cluster. However the model can also be run locally if the source code is 
+recompiled having turned off / commented out two lines in the header file Macros.h, namely 
+'#define USE_CLUSTER' and '#define USE_COMMAND_LINE'. 
+If run locally, have set number of cores at 6 (in main.cpp), which again can be changed if desired. 
+
+ 
 
 DLL FILES, NUM CORES etc.
 
@@ -53,7 +57,8 @@ Example parameter files are provided in the directory [ParamFiles](./ParamFiles)
 By default, the features specified in the parameter files 
 produce an output string that identifies the features present in that model run. 
 This output string is then included within all output file names. 
-The output strings are long, unweildly and difficult to interpret.
+The output strings are long, unweildly and difficult to interpret. We apologise for the inconvenience
+and are working to make this less painful. 
 
 Our main model (with both age and serotype effects) has output string
 "VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU". 

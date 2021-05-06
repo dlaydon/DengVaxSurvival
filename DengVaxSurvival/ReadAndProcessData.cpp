@@ -33,222 +33,221 @@ void ReadInParams			(Housekeeping_Struct &HOUSE, Chains_Struct &CHAINS, Chains_S
 			std::getline(ParamsEtc, param_value_string	, '\n');
 
 			//// these contribute to the output string. 
-					if (param_name == "ModelVariant"					)	ModVariantStringDummy			= param_value_string;				//// string
-			else	if (param_name == "SingleOrMultiDose"				)	SingleOrMultiDoseStringDummy	= param_value_string;				//// string
-			else	if (param_name == "ActiveOrPassivePhase"			)	ActiveOrHospitalStringDummy		= param_value_string;				//// string
-			else	if (param_name == "MildAndSevere"					)	MildAndSevereStringDummy		= param_value_string;				//// string
-			else	if (param_name == "AugMH_or_Gibbs"					)	AugMH_or_GibbsDummy				= param_value_string;				//// string
-			else	if (param_name == "LinKnts"							)	HOUSE.LinKnts					= std::stoi(param_value_string);	//// string
-			else	if (param_name == "EffNegWane"						)	HOUSE.EffNegWane				= Convert_EffNegWane_String(param_value_string);	//// string
+			if (param_name == "ModelVariant"					)	ModVariantStringDummy			= param_value_string;				//// string
+			if (param_name == "SingleOrMultiDose"				)	SingleOrMultiDoseStringDummy	= param_value_string;				//// string
+			if (param_name == "ActiveOrPassivePhase"			)	ActiveOrHospitalStringDummy		= param_value_string;				//// string
+			if (param_name == "MildAndSevere"					)	MildAndSevereStringDummy		= param_value_string;				//// string
+			if (param_name == "AugMH_or_Gibbs"					)	AugMH_or_GibbsDummy				= param_value_string;				//// string
+			if (param_name == "LinKnts"							)	HOUSE.LinKnts					= std::stoi(param_value_string);	//// string
+			if (param_name == "EffNegWane"						)	HOUSE.EffNegWane				= Convert_EffNegWane_String(param_value_string);	//// string
 			
-			else	if (param_name == "FitWaningRate"					)	HOUSE.FitWaningRate				= std::stoi(param_value_string);
-			else	if (param_name == "HillWaning"						)	HOUSE.HillWaning				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "ResidEffs"						)	HOUSE.ResidEffs					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SSASVE_Additive"					)	HOUSE.SSASVE_Additive			= std::stoi(param_value_string);	//// bool
+			if (param_name == "FitWaningRate"					)	HOUSE.FitWaningRate				= std::stoi(param_value_string);
+			if (param_name == "HillWaning"						)	HOUSE.HillWaning				= std::stoi(param_value_string);	//// bool
+			if (param_name == "ResidEffs"						)	HOUSE.ResidEffs					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SSASVE_Additive"					)	HOUSE.SSASVE_Additive			= std::stoi(param_value_string);	//// bool
 			
-			else	if (param_name == "SS_VEs"							)	HOUSE.SeroSpecificEfficacies	= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SS_Ks"							)	HOUSE.SeroSpecific_K_values		= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_VEs"							)	HOUSE.SeroSpecificEfficacies	= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_Ks"							)	HOUSE.SeroSpecific_K_values		= std::stoi(param_value_string);	//// bool
 
-			else	if (param_name == "SS_KAM_0"						)	HOUSE.SS_KAM_0					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SS_KAM_2"						)	HOUSE.SS_KAM_2					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SS_KPS_0"						)	HOUSE.SS_KPS_0					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SS_KPS_1"						)	HOUSE.SS_KPS_1					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SS_KPS_2"						)	HOUSE.SS_KPS_2					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "PS_Ks_Multiply_AM_Ks"			)	HOUSE.PS_Ks_Multiply_AM_Ks		= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "BaselinePartition"				)	HOUSE.BaselinePartition			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "PASSIVE_PHASE_ONLY"				)	HOUSE.PASSIVE_PHASE_ONLY		= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_KAM_0"						)	HOUSE.SS_KAM_0					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_KAM_2"						)	HOUSE.SS_KAM_2					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_KPS_0"						)	HOUSE.SS_KPS_0					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_KPS_1"						)	HOUSE.SS_KPS_1					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SS_KPS_2"						)	HOUSE.SS_KPS_2					= std::stoi(param_value_string);	//// bool
+			if (param_name == "PS_Ks_Multiply_AM_Ks"			)	HOUSE.PS_Ks_Multiply_AM_Ks		= std::stoi(param_value_string);	//// bool
+			if (param_name == "BaselinePartition"				)	HOUSE.BaselinePartition			= std::stoi(param_value_string);	//// bool
+			if (param_name == "PASSIVE_PHASE_ONLY"				)	HOUSE.PASSIVE_PHASE_ONLY		= std::stoi(param_value_string);	//// bool
 			
-			else	if (param_name == "SingleEff"						)	HOUSE.SingleEff					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Single_SNeg_Eff"					)	HOUSE.Single_SNeg_Eff			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Single_SPos_Eff"					)	HOUSE.Single_SPos_Eff			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Which_SNeg_SeroFitsAll"			)	HOUSE.Which_SNeg_SeroFitsAll	= std::stoi(param_value_string);	//// int
-			else	if (param_name == "Which_SPos_SeroFitsAll"			)	HOUSE.Which_SPos_SeroFitsAll	= std::stoi(param_value_string);	//// int
-			else	if (param_name == "RelRisksSameBtwSerotypes"		)	HOUSE.RelRisksSameBtwSerotypes	= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Which_Sero_FitsAll"				)	HOUSE.Which_Sero_FitsAll		= std::stoi(param_value_string);	//// int
+			if (param_name == "SingleEff"						)	HOUSE.SingleEff					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Single_SNeg_Eff"					)	HOUSE.Single_SNeg_Eff			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Single_SPos_Eff"					)	HOUSE.Single_SPos_Eff			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Which_SNeg_SeroFitsAll"			)	HOUSE.Which_SNeg_SeroFitsAll	= std::stoi(param_value_string);	//// int
+			if (param_name == "Which_SPos_SeroFitsAll"			)	HOUSE.Which_SPos_SeroFitsAll	= std::stoi(param_value_string);	//// int
+			if (param_name == "RelRisksSameBtwSerotypes"		)	HOUSE.RelRisksSameBtwSerotypes	= std::stoi(param_value_string);	//// bool
+			if (param_name == "Which_Sero_FitsAll"				)	HOUSE.Which_Sero_FitsAll		= std::stoi(param_value_string);	//// int
 			
-			else	if (param_name == "LTFU_SurvivalCurves"				)	HOUSE.LTFU_SurvivalCurves				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "OutputStringExtra"				)	HOUSE.OutputStringExtra					= param_value_string;				//// string
-			else	if (param_name == "OutputStringExtra_PrevChain"		)	HOUSE.OutputStringExtra_PrevChain		= param_value_string;				//// string
-			else	if (param_name == "OutputStringForOldChainInput_Aug")	HOUSE.OutputStringForOldChainInput_Aug	= param_value_string;				//// string
-			else	if (param_name == "OldChainFileNamePrefix_Aug"		)	HOUSE.OldChainFileNamePrefix_Aug		= param_value_string;				//// string
+			if (param_name == "LTFU_SurvivalCurves"				)	HOUSE.LTFU_SurvivalCurves				= std::stoi(param_value_string);	//// bool
+			if (param_name == "OutputStringExtra"				)	HOUSE.OutputStringExtra					= param_value_string;				//// string
+			if (param_name == "OutputStringExtra_PrevChain"		)	HOUSE.OutputStringExtra_PrevChain		= param_value_string;				//// string
+			if (param_name == "OutputStringForOldChainInput_Aug")	HOUSE.OutputStringForOldChainInput_Aug	= param_value_string;				//// string
+			if (param_name == "OldChainFileNamePrefix_Aug"		)	HOUSE.OldChainFileNamePrefix_Aug		= param_value_string;				//// string
 
-			else	if (param_name == "StartFromPreviousChain"			)	HOUSE.StartFromPreviousChain			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "StartFromPreviousChain_Aug"		)	HOUSE.StartFromPreviousChain_Aug		= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AddOutputStringExtraToOldChains"	)	HOUSE.AddOutputStringExtraToOldChains	= std::stoi(param_value_string);	//// bool
+			if (param_name == "StartFromPreviousChain"			)	HOUSE.StartFromPreviousChain			= std::stoi(param_value_string);	//// bool
+			if (param_name == "StartFromPreviousChain_Aug"		)	HOUSE.StartFromPreviousChain_Aug		= std::stoi(param_value_string);	//// bool
+			if (param_name == "AddOutputStringExtraToOldChains"	)	HOUSE.AddOutputStringExtraToOldChains	= std::stoi(param_value_string);	//// bool
 			
-			else	if (param_name == "ParamRangeFileName"				)	HOUSE.ParamRangeFileName				= param_value_string;				//// string
-			else	if (param_name == "WBIC_RunOnly"					)	HOUSE.WBIC_RunOnly						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Do_WBIC_Runs"					)	HOUSE.Do_WBIC_Runs						= std::stoi(param_value_string);	//// bool
+			if (param_name == "ParamRangeFileName"				)	HOUSE.ParamRangeFileName				= param_value_string;				//// string
+			if (param_name == "WBIC_RunOnly"					)	HOUSE.WBIC_RunOnly						= std::stoi(param_value_string);	//// bool
+			if (param_name == "Do_WBIC_Runs"					)	HOUSE.Do_WBIC_Runs						= std::stoi(param_value_string);	//// bool
 			
 			
-			else	if (param_name == "ModellingHospitalized"			)	HOUSE.ModellingHospitalized					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "ModelHosp_Indie_Ks"				)	HOUSE.ModelHosp_Indie_Ks					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fixed_Severe_RelRisks"			)	HOUSE.Fixed_Severe_RelRisks					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "FSKs_Ratio_SetNum"				)	HOUSE.FSKs_Ratio_SetNum						= std::stoi(param_value_string);	//// int
+			if (param_name == "ModellingHospitalized"			)	HOUSE.ModellingHospitalized					= std::stoi(param_value_string);	//// bool
+			if (param_name == "ModelHosp_Indie_Ks"				)	HOUSE.ModelHosp_Indie_Ks					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fixed_Severe_RelRisks"			)	HOUSE.Fixed_Severe_RelRisks					= std::stoi(param_value_string);	//// bool
+			if (param_name == "FSKs_Ratio_SetNum"				)	HOUSE.FSKs_Ratio_SetNum						= std::stoi(param_value_string);	//// int
 			
-			else	if (param_name == "SerotypeString"					)	HOUSE.SerotypeString						= param_value_string;				//// string
-			else	if (param_name == "SFU"								)	HOUSE.SFU									= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Include_Late_Cases"				)	HOUSE.Include_Late_Cases					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "FakeExtObs"						)	HOUSE.FakeExtObs							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "PooledCountries"					)	HOUSE.PooledCountries						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "PooledTrials"					)	HOUSE.PooledTrials							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Empirical_SeroPrevs"				)	HOUSE.Empirical_SeroPrevs					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Weighting_Pass_Sev"				)	HOUSE.Weighting_Pass_Sev					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "PS_Weight"						)	HOUSE.PS_Weight								= std::stod(param_value_string);	//// double 
-			else	if (param_name == "ASVE"							)	HOUSE.ASVE									= Convert_AS_String(param_value_string);	//// Age_Option from string
-			else	if (param_name == "ASVE_AdditionalKnots"			)	HOUSE.ASVE_AdditionalKnots					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AS_Haz"							)	HOUSE.AS_Haz								= Convert_AS_String(param_value_string);	//// Age_Option from string
-			else	if (param_name == "AS_Haz_AdditionalKnots"			)	HOUSE.AS_Haz_AdditionalKnots				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AS_Waning"						)	HOUSE.AS_Waning								= Convert_AS_String(param_value_string);	//// Age_Option from string
-			else	if (param_name == "AS_Waning_OnlyOneSeroStatus"		)	HOUSE.AS_Waning_OnlyOneSeroStatus			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AS_Waning_OneSeroBS"				)	HOUSE.AS_Waning_OneSeroBS					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AS_Waning_KnotSet"				)	HOUSE.AS_Waning_KnotSet						= std::stoi(param_value_string);	//// int
-			else	if (param_name == "AS_Waning_Homogeneous"			)	HOUSE.AS_Waning_Homogeneous					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AgeEffectsSame_Waning"			)	HOUSE.AgeEffectsSame_Waning					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AgeEffectsSame_VE"				)	HOUSE.AgeEffectsSame_VE						= std::stoi(param_value_string);	//// bool
+			if (param_name == "SerotypeString"					)	HOUSE.SerotypeString						= param_value_string;				//// string
+			if (param_name == "SFU"								)	HOUSE.SFU									= std::stoi(param_value_string);	//// bool
+			if (param_name == "Include_Late_Cases"				)	HOUSE.Include_Late_Cases					= std::stoi(param_value_string);	//// bool
+			if (param_name == "FakeExtObs"						)	HOUSE.FakeExtObs							= std::stoi(param_value_string);	//// bool
+			if (param_name == "PooledCountries"					)	HOUSE.PooledCountries						= std::stoi(param_value_string);	//// bool
+			if (param_name == "PooledTrials"					)	HOUSE.PooledTrials							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Empirical_SeroPrevs"				)	HOUSE.Empirical_SeroPrevs					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Weighting_Pass_Sev"				)	HOUSE.Weighting_Pass_Sev					= std::stoi(param_value_string);	//// bool
+			if (param_name == "PS_Weight"						)	HOUSE.PS_Weight								= std::stod(param_value_string);	//// double 
+			if (param_name == "ASVE"							)	HOUSE.ASVE									= Convert_AS_String(param_value_string);	//// Age_Option from string
+			if (param_name == "ASVE_AdditionalKnots"			)	HOUSE.ASVE_AdditionalKnots					= std::stoi(param_value_string);	//// bool
+			if (param_name == "AS_Haz"							)	HOUSE.AS_Haz								= Convert_AS_String(param_value_string);	//// Age_Option from string
+			if (param_name == "AS_Haz_AdditionalKnots"			)	HOUSE.AS_Haz_AdditionalKnots				= std::stoi(param_value_string);	//// bool
+			if (param_name == "AS_Waning"						)	HOUSE.AS_Waning								= Convert_AS_String(param_value_string);	//// Age_Option from string
+			if (param_name == "AS_Waning_OnlyOneSeroStatus"		)	HOUSE.AS_Waning_OnlyOneSeroStatus			= std::stoi(param_value_string);	//// bool
+			if (param_name == "AS_Waning_OneSeroBS"				)	HOUSE.AS_Waning_OneSeroBS					= std::stoi(param_value_string);	//// bool
+			if (param_name == "AS_Waning_KnotSet"				)	HOUSE.AS_Waning_KnotSet						= std::stoi(param_value_string);	//// int
+			if (param_name == "AS_Waning_Homogeneous"			)	HOUSE.AS_Waning_Homogeneous					= std::stoi(param_value_string);	//// bool
+			if (param_name == "AgeEffectsSame_Waning"			)	HOUSE.AgeEffectsSame_Waning					= std::stoi(param_value_string);	//// bool
+			if (param_name == "AgeEffectsSame_VE"				)	HOUSE.AgeEffectsSame_VE						= std::stoi(param_value_string);	//// bool
 			
-			else	if (param_name == "PSVEs"							)	HOUSE.PSVEs									= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AS_VE_Homogeneous"				)	HOUSE.AS_VE_Homogeneous						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "ASVE_OnlyOneSeroStatus"			)	HOUSE.ASVE_OnlyOneSeroStatus				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "ASVE_BS"							)	HOUSE.ASVE_BS								= std::stoi(param_value_string);	//// int 
-			else	if (param_name == "AdjHaz"							)	HOUSE.AdjHaz								= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "Which_BS_BaseHazMult"			)	HOUSE.Which_BS_BaseHazMult					= std::stoi(param_value_string);	//// int 
+			if (param_name == "PSVEs"							)	HOUSE.PSVEs									= std::stoi(param_value_string);	//// bool
+			if (param_name == "AS_VE_Homogeneous"				)	HOUSE.AS_VE_Homogeneous						= std::stoi(param_value_string);	//// bool
+			if (param_name == "ASVE_OnlyOneSeroStatus"			)	HOUSE.ASVE_OnlyOneSeroStatus				= std::stoi(param_value_string);	//// bool
+			if (param_name == "ASVE_BS"							)	HOUSE.ASVE_BS								= std::stoi(param_value_string);	//// int 
+			if (param_name == "AdjHaz"							)	HOUSE.AdjHaz								= std::stoi(param_value_string);	//// bool 
+			if (param_name == "Which_BS_BaseHazMult"			)	HOUSE.Which_BS_BaseHazMult					= std::stoi(param_value_string);	//// int 
 			
-			else	if (param_name == "AllDosesRequired_SNeg"			)	HOUSE.AllDosesRequired_SNeg					= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos"			)	HOUSE.AllDosesRequired_SPos					= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SNeg_AgeGroup1"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup1		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SNeg_AgeGroup2"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup2		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SNeg_AgeGroup3"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup3		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SNeg_AgeGroup4"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup4		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SNeg_AgeGroup5"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup5		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos_AgeGroup1"	)	HOUSE.AllDosesRequired_SPos_AgeGroup1		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos_AgeGroup2"	)	HOUSE.AllDosesRequired_SPos_AgeGroup2		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos_AgeGroup3"	)	HOUSE.AllDosesRequired_SPos_AgeGroup3		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos_AgeGroup4"	)	HOUSE.AllDosesRequired_SPos_AgeGroup4		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "AllDosesRequired_SPos_AgeGroup5"	)	HOUSE.AllDosesRequired_SPos_AgeGroup5		= std::stoi(param_value_string);	//// bool 
-			else	if (param_name == "ExtImSub"						)	HOUSE.ExtImSub								= Convert_ExtImSub_String(param_value_string);	//// bool 
-			else	if (param_name == "AreWeAugmenting"					)	HOUSE.AreWeAugmenting						= std::stoi(param_value_string);	//// bool
+			if (param_name == "AllDosesRequired_SNeg"			)	HOUSE.AllDosesRequired_SNeg					= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos"			)	HOUSE.AllDosesRequired_SPos					= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SNeg_AgeGroup1"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup1		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SNeg_AgeGroup2"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup2		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SNeg_AgeGroup3"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup3		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SNeg_AgeGroup4"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup4		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SNeg_AgeGroup5"	)	HOUSE.AllDosesRequired_SNeg_AgeGroup5		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos_AgeGroup1"	)	HOUSE.AllDosesRequired_SPos_AgeGroup1		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos_AgeGroup2"	)	HOUSE.AllDosesRequired_SPos_AgeGroup2		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos_AgeGroup3"	)	HOUSE.AllDosesRequired_SPos_AgeGroup3		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos_AgeGroup4"	)	HOUSE.AllDosesRequired_SPos_AgeGroup4		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "AllDosesRequired_SPos_AgeGroup5"	)	HOUSE.AllDosesRequired_SPos_AgeGroup5		= std::stoi(param_value_string);	//// bool 
+			if (param_name == "ExtImSub"						)	HOUSE.ExtImSub								= Convert_ExtImSub_String(param_value_string);	//// bool 
+			if (param_name == "AreWeAugmenting"					)	HOUSE.AreWeAugmenting						= std::stoi(param_value_string);	//// bool
 
-			else	if (param_name == "BurnIn"							)	CHAINS.BurnIn									= std::stoi(param_value_string);	//// int
-			else	if (param_name == "No_Iterations"					)	CHAINS.No_Iterations							= std::stoi(param_value_string);	//// int
-			else	if (param_name == "WBIC_BurnIn"						)	WBIC_CHAINS.BurnIn								= std::stoi(param_value_string);	//// int
-			else	if (param_name == "WBIC_No_Iterations"				)	WBIC_CHAINS.No_Iterations						= std::stoi(param_value_string);	//// int
-			else	if (param_name == "AugmentEveryHowManyIterations"	)	CHAINS.AugmentEveryHowManyIterations			= std::stoi(param_value_string);	//// int
-			else	if (param_name == "AddtoChainEveryHowManyIterations")	CHAINS.AddtoChainEveryHowManyIterations			= std::stoi(param_value_string);	//// int
-			else	if (param_name == "WhenToFlipTemperatureBack"		)	CHAINS.WhenToFlipTemperatureBack				= std::stoi(param_value_string);	//// int
-			else	if (param_name == "SimulatedAnnealing"				)	CHAINS.SimulatedAnnealing						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "CoolDuringBurnIn"				)	CHAINS.CoolDuringBurnIn							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "FinalTemperature"				)	CHAINS.FinalTemperature							= std::stod(param_value_string);	//// double
-			else	if (param_name == "WBIC_FinalTemperature"			)	WBIC_CHAINS.FinalTemperature					= std::stod(param_value_string);	//// double
-			else	if (param_name == "WBIC_UseDefault_FinalTemperature")	WBIC_CHAINS.UseDefault_FinalTemperature			= std::stod(param_value_string);	//// double
+			if (param_name == "BurnIn"							)	CHAINS.BurnIn									= std::stoi(param_value_string);	//// int
+			if (param_name == "No_Iterations"					)	CHAINS.No_Iterations							= std::stoi(param_value_string);	//// int
+			if (param_name == "WBIC_BurnIn"						)	WBIC_CHAINS.BurnIn								= std::stoi(param_value_string);	//// int
+			if (param_name == "WBIC_No_Iterations"				)	WBIC_CHAINS.No_Iterations						= std::stoi(param_value_string);	//// int
+			if (param_name == "AugmentEveryHowManyIterations"	)	CHAINS.AugmentEveryHowManyIterations			= std::stoi(param_value_string);	//// int
+			if (param_name == "AddtoChainEveryHowManyIterations")	CHAINS.AddtoChainEveryHowManyIterations			= std::stoi(param_value_string);	//// int
+			if (param_name == "WhenToFlipTemperatureBack"		)	CHAINS.WhenToFlipTemperatureBack				= std::stoi(param_value_string);	//// int
+			if (param_name == "SimulatedAnnealing"				)	CHAINS.SimulatedAnnealing						= std::stoi(param_value_string);	//// bool
+			if (param_name == "CoolDuringBurnIn"				)	CHAINS.CoolDuringBurnIn							= std::stoi(param_value_string);	//// bool
+			if (param_name == "FinalTemperature"				)	CHAINS.FinalTemperature							= std::stod(param_value_string);	//// double
+			if (param_name == "WBIC_FinalTemperature"			)	WBIC_CHAINS.FinalTemperature					= std::stod(param_value_string);	//// double
+			if (param_name == "WBIC_UseDefault_FinalTemperature")	WBIC_CHAINS.UseDefault_FinalTemperature			= std::stod(param_value_string);	//// double
 			
-			else	if (param_name == "Run_MCMC"							)	HOUSE.Run_MCMC								= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AreWeFittingParameters"				)	CHAINS.AreWeFittingParameters				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AreWeChecking"						)	CHAINS.AreWeChecking						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "CalculateFreshLikeLihood"			)	CHAINS.CalculateFreshLikeLihood				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "CheckIndividualAugmentation"			)	CHAINS.CheckIndividualAugmentation			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AreWeCalculatingSeroPrevs"			)	CHAINS.AreWeCalculatingSeroPrevs			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "HazRatiosOnly"						)	CHAINS.HazRatiosOnly						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "OutputIndividualSurvivalTables"		)	CHAINS.OutputIndividualSurvivalTables		= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Calc_SCsARsHRPs_Any"					)	CHAINS.Calc_SCsARsHRPs_Any					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Calc_SCsARsHRPs_MeanAndCrIs"			)	CHAINS.Calc_SCsARsHRPs_MeanAndCrIs			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Calc_SCsARsHRPs_ModalMaxLike"		)	CHAINS.Calc_SCsARsHRPs_ModalMaxLike			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "WBIC_Calc_SCsARsHRPs_Any"			)	WBIC_CHAINS.Calc_SCsARsHRPs_Any				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "WBIC_Calc_SCsARsHRPs_MeanAndCrIs"	)	WBIC_CHAINS.Calc_SCsARsHRPs_MeanAndCrIs		= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "WBIC_Calc_SCsARsHRPs_ModalMaxLike"	)	WBIC_CHAINS.Calc_SCsARsHRPs_ModalMaxLike	= std::stoi(param_value_string);	//// bool
+			if (param_name == "Run_MCMC"							)	HOUSE.Run_MCMC								= std::stoi(param_value_string);	//// bool
+			if (param_name == "AreWeFittingParameters"				)	CHAINS.AreWeFittingParameters				= std::stoi(param_value_string);	//// bool
+			if (param_name == "AreWeChecking"						)	CHAINS.AreWeChecking						= std::stoi(param_value_string);	//// bool
+			if (param_name == "CalculateFreshLikeLihood"			)	CHAINS.CalculateFreshLikeLihood				= std::stoi(param_value_string);	//// bool
+			if (param_name == "CheckIndividualAugmentation"			)	CHAINS.CheckIndividualAugmentation			= std::stoi(param_value_string);	//// bool
+			if (param_name == "AreWeCalculatingSeroPrevs"			)	CHAINS.AreWeCalculatingSeroPrevs			= std::stoi(param_value_string);	//// bool
+			if (param_name == "HazRatiosOnly"						)	CHAINS.HazRatiosOnly						= std::stoi(param_value_string);	//// bool
+			if (param_name == "OutputIndividualSurvivalTables"		)	CHAINS.OutputIndividualSurvivalTables		= std::stoi(param_value_string);	//// bool
+			if (param_name == "Calc_SCsARsHRPs_Any"					)	CHAINS.Calc_SCsARsHRPs_Any					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Calc_SCsARsHRPs_MeanAndCrIs"			)	CHAINS.Calc_SCsARsHRPs_MeanAndCrIs			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Calc_SCsARsHRPs_ModalMaxLike"		)	CHAINS.Calc_SCsARsHRPs_ModalMaxLike			= std::stoi(param_value_string);	//// bool
+			if (param_name == "WBIC_Calc_SCsARsHRPs_Any"			)	WBIC_CHAINS.Calc_SCsARsHRPs_Any				= std::stoi(param_value_string);	//// bool
+			if (param_name == "WBIC_Calc_SCsARsHRPs_MeanAndCrIs"	)	WBIC_CHAINS.Calc_SCsARsHRPs_MeanAndCrIs		= std::stoi(param_value_string);	//// bool
+			if (param_name == "WBIC_Calc_SCsARsHRPs_ModalMaxLike"	)	WBIC_CHAINS.Calc_SCsARsHRPs_ModalMaxLike	= std::stoi(param_value_string);	//// bool
 			
-			else	if (param_name == "seed1"							)	HOUSE.seed1							= std::stoi(param_value_string);	//// int
-			else	if (param_name == "seed2"							)	HOUSE.seed2							= std::stoi(param_value_string);	//// int
-			else	if (param_name == "DataFilename"					)	HOUSE.DataFilename					= param_value_string;				//// string
-			else	if (param_name == "UseSyntheticData"				)	HOUSE.UseSyntheticData				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "RandomCases"						)	HOUSE.RandomCases					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "RandCase_Seed"					)	HOUSE.RandCase_Seed					= std::stoi(param_value_string);	//// int
+			if (param_name == "seed1"							)	HOUSE.seed1							= std::stoi(param_value_string);	//// int
+			if (param_name == "seed2"							)	HOUSE.seed2							= std::stoi(param_value_string);	//// int
+			if (param_name == "DataFilename"					)	HOUSE.DataFilename					= param_value_string;				//// string
+			if (param_name == "UseSyntheticData"				)	HOUSE.UseSyntheticData				= std::stoi(param_value_string);	//// bool
+			if (param_name == "RandomCases"						)	HOUSE.RandomCases					= std::stoi(param_value_string);	//// bool
+			if (param_name == "RandCase_Seed"					)	HOUSE.RandCase_Seed					= std::stoi(param_value_string);	//// int
 			
-			else	if (param_name == "Output_LL_minus_Aug"				)	CHAINS.Output_LL_minus_Aug				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "AugmentEveryHowManyIterations"	)	CHAINS.AugmentEveryHowManyIterations	= std::stoi(param_value_string);	//// int
-			else	if (param_name == "AddtoChainEveryHowManyIterations")	CHAINS.AddtoChainEveryHowManyIterations	= std::stoi(param_value_string);	//// int
+			if (param_name == "Output_LL_minus_Aug"				)	CHAINS.Output_LL_minus_Aug				= std::stoi(param_value_string);	//// bool
+			if (param_name == "AugmentEveryHowManyIterations"	)	CHAINS.AugmentEveryHowManyIterations	= std::stoi(param_value_string);	//// int
+			if (param_name == "AddtoChainEveryHowManyIterations")	CHAINS.AddtoChainEveryHowManyIterations	= std::stoi(param_value_string);	//// int
 			
 			//// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// /////  **** **** //// ///// 
 			//// //// (initial) model Parameter input
 			
-			else	if (param_name == "KA_0"								)	CurrentPARAMS.KA_0									= std::stod(param_value_string);	//// double
-			else	if (param_name == "KA_1"								)	CurrentPARAMS.KA_1									= std::stod(param_value_string);	//// double
-			else	if (param_name == "KA_2"								)	CurrentPARAMS.KA_2									= std::stod(param_value_string);	//// double
-			else	if (param_name == "KH_0"								)	CurrentPARAMS.KH_0									= std::stod(param_value_string);	//// double
-			else	if (param_name == "KH_1"								)	CurrentPARAMS.KH_1									= std::stod(param_value_string);	//// double
-			else	if (param_name == "KH_2"								)	CurrentPARAMS.KH_2									= std::stod(param_value_string);	//// double
-			else	if (param_name == "PosEfficacy"							)	CurrentPARAMS.PosEfficacy							= std::stod(param_value_string);	//// double
-			else	if (param_name == "NegEfficacy"							)	CurrentPARAMS.NegEfficacy							= std::stod(param_value_string);	//// double
-			else	if (param_name == "PosWaning"							)	CurrentPARAMS.PosWaning								= std::stod(param_value_string);	//// double
-			else	if (param_name == "NegWaning"							)	CurrentPARAMS.NegWaning								= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_BS_BaseHazMult"				)	CurrentPARAMS.Initial_BS_BaseHazMult				= std::stod(param_value_string);	//// double
-			else	if (param_name == "Hosp_K_mult"							)	CurrentPARAMS.Hosp_K_mult							= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Halflife_Hill"				)	CurrentPARAMS.Initial_Halflife_Hill					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Power_Hill"					)	CurrentPARAMS.Initial_Power_Hill					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Halflife_ASVE"				)	CurrentPARAMS.Initial_Halflife_ASVE					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Power_ASVE"					)	CurrentPARAMS.Initial_Power_ASVE					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Prop_ASVE"					)	CurrentPARAMS.Initial_Prop_ASVE						= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Halflife_AS_Haz"				)	CurrentPARAMS.Initial_Halflife_AS_Haz				= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Power_AS_Haz"				)	CurrentPARAMS.Initial_Power_AS_Haz					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Prop_AS_Haz"					)	CurrentPARAMS.Initial_Prop_AS_Haz					= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Halflife_AS_Waning"			)	CurrentPARAMS.Initial_Halflife_AS_Waning			= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_Power_AS_Waning"				)	CurrentPARAMS.Initial_Power_AS_Waning				= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_AS_Prime_PropIndptAge_SNeg"	)	CurrentPARAMS.Initial_AS_Prime_PropIndptAge_SNeg	= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_AS_Prime_PropIndptAge_SPos"	)	CurrentPARAMS.Initial_AS_Prime_PropIndptAge_SPos	= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_AS_Prime_SNeg_rate"			)	CurrentPARAMS.Initial_AS_Prime_SNeg_rate			= std::stod(param_value_string);	//// double
-			else	if (param_name == "Initial_AS_Prime_SPos_rate"			)	CurrentPARAMS.Initial_AS_Prime_SPos_rate			= std::stod(param_value_string);	//// double
+			if (param_name == "KA_0"								)	CurrentPARAMS.KA_0									= std::stod(param_value_string);	//// double
+			if (param_name == "KA_1"								)	CurrentPARAMS.KA_1									= std::stod(param_value_string);	//// double
+			if (param_name == "KA_2"								)	CurrentPARAMS.KA_2									= std::stod(param_value_string);	//// double
+			if (param_name == "KH_0"								)	CurrentPARAMS.KH_0									= std::stod(param_value_string);	//// double
+			if (param_name == "KH_1"								)	CurrentPARAMS.KH_1									= std::stod(param_value_string);	//// double
+			if (param_name == "KH_2"								)	CurrentPARAMS.KH_2									= std::stod(param_value_string);	//// double
+			if (param_name == "PosEfficacy"							)	CurrentPARAMS.PosEfficacy							= std::stod(param_value_string);	//// double
+			if (param_name == "NegEfficacy"							)	CurrentPARAMS.NegEfficacy							= std::stod(param_value_string);	//// double
+			if (param_name == "PosWaning"							)	CurrentPARAMS.PosWaning								= std::stod(param_value_string);	//// double
+			if (param_name == "NegWaning"							)	CurrentPARAMS.NegWaning								= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_BS_BaseHazMult"				)	CurrentPARAMS.Initial_BS_BaseHazMult				= std::stod(param_value_string);	//// double
+			if (param_name == "Hosp_K_mult"							)	CurrentPARAMS.Hosp_K_mult							= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Halflife_Hill"				)	CurrentPARAMS.Initial_Halflife_Hill					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Power_Hill"					)	CurrentPARAMS.Initial_Power_Hill					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Halflife_ASVE"				)	CurrentPARAMS.Initial_Halflife_ASVE					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Power_ASVE"					)	CurrentPARAMS.Initial_Power_ASVE					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Prop_ASVE"					)	CurrentPARAMS.Initial_Prop_ASVE						= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Halflife_AS_Haz"				)	CurrentPARAMS.Initial_Halflife_AS_Haz				= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Power_AS_Haz"				)	CurrentPARAMS.Initial_Power_AS_Haz					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Prop_AS_Haz"					)	CurrentPARAMS.Initial_Prop_AS_Haz					= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Halflife_AS_Waning"			)	CurrentPARAMS.Initial_Halflife_AS_Waning			= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_Power_AS_Waning"				)	CurrentPARAMS.Initial_Power_AS_Waning				= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_AS_Prime_PropIndptAge_SNeg"	)	CurrentPARAMS.Initial_AS_Prime_PropIndptAge_SNeg	= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_AS_Prime_PropIndptAge_SPos"	)	CurrentPARAMS.Initial_AS_Prime_PropIndptAge_SPos	= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_AS_Prime_SNeg_rate"			)	CurrentPARAMS.Initial_AS_Prime_SNeg_rate			= std::stod(param_value_string);	//// double
+			if (param_name == "Initial_AS_Prime_SPos_rate"			)	CurrentPARAMS.Initial_AS_Prime_SPos_rate			= std::stod(param_value_string);	//// double
 
 			//// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// ///// **** **** //// /////  **** **** //// ///// 
 			//// //// Fit or skip various parameters
 			
-			else	if (param_name == "FitAllCountries"					)	HOUSE.FitAllCountries					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c0"							)	HOUSE.Fit_c0							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c1"							)	HOUSE.Fit_c1							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c2"							)	HOUSE.Fit_c2							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c3"							)	HOUSE.Fit_c3							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c4"							)	HOUSE.Fit_c4							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c5"							)	HOUSE.Fit_c5							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c6"							)	HOUSE.Fit_c6							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c7"							)	HOUSE.Fit_c7							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c8"							)	HOUSE.Fit_c8							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Fit_c9"							)	HOUSE.Fit_c9							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "FitAllGlobalParams"				)	HOUSE.FitAllGlobalParams				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_KA_0"						)	HOUSE.Skip_KA_0							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_NegWaning"					)	HOUSE.Skip_NegWaning					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_NegWaning_HLife"			)	HOUSE.Skip_NegWaning_HLife				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_NegWaning_Power"			)	HOUSE.Skip_NegWaning_Power				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_PosWaning"					)	HOUSE.Skip_PosWaning					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_PosWaning_HLife"			)	HOUSE.Skip_PosWaning_HLife				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_PosWaning_Power"			)	HOUSE.Skip_PosWaning_Power				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_KA_2"						)	HOUSE.Skip_KA_2							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_KH_0"						)	HOUSE.Skip_KH_0							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_KH_1"						)	HOUSE.Skip_KH_1							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_KH_2"						)	HOUSE.Skip_KH_2							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_PosEfficacies"				)	HOUSE.Skip_PosEfficacies				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_NegEfficacies"				)	HOUSE.Skip_NegEfficacies				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_qvals"						)	HOUSE.Skip_qvals						= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SkipRelativeRisks"				)	HOUSE.SkipRelativeRisks					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SkipKnots"						)	HOUSE.SkipKnots							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "SkipHistHazards"					)	HOUSE.SkipHistHazards					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_Hosp_Mult"					)	HOUSE.Skip_Hosp_Mult					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_Rhos"						)	HOUSE.Skip_Rhos							= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_All_ASVEs"					)	HOUSE.Skip_All_ASVEs					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_SNeg_ASVEs"					)	HOUSE.Skip_SNeg_ASVEs					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_SPos_ASVEs"					)	HOUSE.Skip_SPos_ASVEs					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_ASVEsPowers"				)	HOUSE.Skip_ASVEsPowers					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_ASVE_Halflives"				)	HOUSE.Skip_ASVE_Halflives				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_ASVE_Props"					)	HOUSE.Skip_ASVE_Props					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_All_AS_Haz"					)	HOUSE.Skip_All_AS_Haz					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Haz_Powers"				)	HOUSE.Skip_AS_Haz_Powers				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Haz_Halflives"			)	HOUSE.Skip_AS_Haz_Halflives				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Haz_Props"				)	HOUSE.Skip_AS_Haz_Props					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_BS_BaseHazMult"				)	HOUSE.Skip_BS_BaseHazMult				= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Prime_All"				)	HOUSE.Skip_AS_Prime_All					= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Prime_SNegRate"			)	HOUSE.Skip_AS_Prime_SNegRate			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Prime_SPosRate"			)	HOUSE.Skip_AS_Prime_SPosRate			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Prime_SNegProp"			)	HOUSE.Skip_AS_Prime_SNegProp			= std::stoi(param_value_string);	//// bool
-			else	if (param_name == "Skip_AS_Prime_SPosProp"			)	HOUSE.Skip_AS_Prime_SPosProp			= std::stoi(param_value_string);	//// bool
-			else	std::cerr << " ReadInParams ERROR: param_name " << param_name << " not recognized. param_value_string = " << param_value_string << endl;
+			if (param_name == "FitAllCountries"					)	HOUSE.FitAllCountries					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c0"							)	HOUSE.Fit_c0							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c1"							)	HOUSE.Fit_c1							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c2"							)	HOUSE.Fit_c2							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c3"							)	HOUSE.Fit_c3							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c4"							)	HOUSE.Fit_c4							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c5"							)	HOUSE.Fit_c5							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c6"							)	HOUSE.Fit_c6							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c7"							)	HOUSE.Fit_c7							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c8"							)	HOUSE.Fit_c8							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Fit_c9"							)	HOUSE.Fit_c9							= std::stoi(param_value_string);	//// bool
+			if (param_name == "FitAllGlobalParams"				)	HOUSE.FitAllGlobalParams				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_KA_0"						)	HOUSE.Skip_KA_0							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_NegWaning"					)	HOUSE.Skip_NegWaning					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_NegWaning_HLife"			)	HOUSE.Skip_NegWaning_HLife				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_NegWaning_Power"			)	HOUSE.Skip_NegWaning_Power				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_PosWaning"					)	HOUSE.Skip_PosWaning					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_PosWaning_HLife"			)	HOUSE.Skip_PosWaning_HLife				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_PosWaning_Power"			)	HOUSE.Skip_PosWaning_Power				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_KA_2"						)	HOUSE.Skip_KA_2							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_KH_0"						)	HOUSE.Skip_KH_0							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_KH_1"						)	HOUSE.Skip_KH_1							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_KH_2"						)	HOUSE.Skip_KH_2							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_PosEfficacies"				)	HOUSE.Skip_PosEfficacies				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_NegEfficacies"				)	HOUSE.Skip_NegEfficacies				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_qvals"						)	HOUSE.Skip_qvals						= std::stoi(param_value_string);	//// bool
+			if (param_name == "SkipRelativeRisks"				)	HOUSE.SkipRelativeRisks					= std::stoi(param_value_string);	//// bool
+			if (param_name == "SkipKnots"						)	HOUSE.SkipKnots							= std::stoi(param_value_string);	//// bool
+			if (param_name == "SkipHistHazards"					)	HOUSE.SkipHistHazards					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_Hosp_Mult"					)	HOUSE.Skip_Hosp_Mult					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_Rhos"						)	HOUSE.Skip_Rhos							= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_All_ASVEs"					)	HOUSE.Skip_All_ASVEs					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_SNeg_ASVEs"					)	HOUSE.Skip_SNeg_ASVEs					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_SPos_ASVEs"					)	HOUSE.Skip_SPos_ASVEs					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_ASVEsPowers"				)	HOUSE.Skip_ASVEsPowers					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_ASVE_Halflives"				)	HOUSE.Skip_ASVE_Halflives				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_ASVE_Props"					)	HOUSE.Skip_ASVE_Props					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_All_AS_Haz"					)	HOUSE.Skip_All_AS_Haz					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Haz_Powers"				)	HOUSE.Skip_AS_Haz_Powers				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Haz_Halflives"			)	HOUSE.Skip_AS_Haz_Halflives				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Haz_Props"				)	HOUSE.Skip_AS_Haz_Props					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_BS_BaseHazMult"				)	HOUSE.Skip_BS_BaseHazMult				= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Prime_All"				)	HOUSE.Skip_AS_Prime_All					= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Prime_SNegRate"			)	HOUSE.Skip_AS_Prime_SNegRate			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Prime_SPosRate"			)	HOUSE.Skip_AS_Prime_SPosRate			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Prime_SNegProp"			)	HOUSE.Skip_AS_Prime_SNegProp			= std::stoi(param_value_string);	//// bool
+			if (param_name == "Skip_AS_Prime_SPosProp"			)	HOUSE.Skip_AS_Prime_SPosProp			= std::stoi(param_value_string);	//// bool
 		}
 		ParamsEtc.close();
 	}
