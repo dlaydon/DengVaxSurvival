@@ -26,25 +26,23 @@ and R output processing code can be found in the subdirectory "R".
 
 ## Simulated Sample Data
 
-The directory [DengVaxSurvival/Data](./DengVaxSurvival/Data) contains simulated sample data, 
-for our default model, and models that separate cases by disease severity, as well as models 
+The directory [DengVaxSurvival/Data](./DengVaxSurvival/Data) contains simulated sample data 
+for our default model, and for models that separate cases by disease severity, as well as models 
 without serotype effects. 
 
 ## Running
 
-The target executable of the C++ source code is named "D_MCMC.exe".
-Syntax for running the executable is "D_MCMC.exe Params_ParticularModelSettings.txt".
-The code is heavily parallelized and will broadly run faster with more cores, ideally on a 
+The target executable of the C++ source code is named `D_MCMC.exe`, which takes a single 
+command line argument specifying a parameter file. So the syntax for running the executable is 
+`D_MCMC.exe Params_ParticularModelSettings.txt`. 
+The code is heavily parallelized and (broadly) will run faster with more cores, ideally on a 
 high-performance cluster. However the model can also be run locally if the source code is 
-recompiled having turned off / commented out two lines in the header file Macros.h, namely 
-'#define USE_CLUSTER' and '#define USE_COMMAND_LINE'. 
+recompiled having turned off/commented out two lines in the header file Macros.h, namely 
+`#define USE_CLUSTER` and `#define USE_COMMAND_LINE`. 
 If run locally, have set number of cores at 6 (in main.cpp), which again can be changed if desired. 
 
- 
-
-DLL FILES, NUM CORES etc.
-
-WHERE IS OUTPUT STORED? 
+Note to run on a cluster, you will need to have the .dll files included in [dll_files](./dll_files) copied to whichever directory the
+executable (.exe) is run from. 
 
 ## Parameter files
 
@@ -84,9 +82,13 @@ StructureDefs.h::Housekeeping_Struct::CreateOutputString, and in the R function 
 
 ## Output
 
-If run locally, output will be in folder .... 
-R scripts BLAH process this output, the results of which appear in folder BLAH with tree structure BLAH
-R scripts expect output to be in folder BLAH, but this can obviously be changed as required.
+All model outputs are `.txt` files. If run locally, model output (e.g. parameter chains, survival tables, attack rates, estimated 
+age-specific seroprevalence) is by default stored in 
+[DengVaxSurvival/Output](./DengVaxSurvival/Output), (although all outputs are untracked by git) as 
+they can be quite large. 
+
+The folder [R](./R) contains scripts to process and plot model output. By default, these scripts
+expect model output to be located in [DengVaxSurvival/Output](./DengVaxSurvival/Output).
 
 
 ### Relevant papers
