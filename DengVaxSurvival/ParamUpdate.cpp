@@ -44,11 +44,11 @@ void PopulateAndOrSwap_Ks_Array	(std::vector<int> WhichCountries, int PhaseSever
 	*/
 	/*NEW - PASS_Ks_MULTIPLY_ACT_Ks*/
 	for (int countryindex = 0; countryindex < WhichCountries.size(); countryindex++)
-		if (HOUSE.PS_Ks_Multiply_AM_Ks && PhaseSeverity == PassiveSevere)
+		if (HOUSE.PS_Ks_Multiply_AM_Ks && (PhaseSeverity == PassiveSevere))
 			PARAMS.K_s[WhichCountries[countryindex]][PassiveSevere][PrevInf][serotype]		=  New_Param * PARAMS.K_s[WhichCountries[countryindex]][ActiveMild][PrevInf][serotype]; //// the new parameter KPS_i (new param) multiplies the active KAM_i. 
 		else //// so either HOUSE.PS_Ks_Multiply_AM_Ks == false or PhaseSeverity == ActiveMild
 		{
-			if (HOUSE.PS_Ks_Multiply_AM_Ks & PhaseSeverity == ActiveMild)
+			if (HOUSE.PS_Ks_Multiply_AM_Ks && (PhaseSeverity == ActiveMild))
 				PARAMS.K_s[WhichCountries[countryindex]][PassiveSevere][PrevInf][serotype]	*= New_Param / PARAMS.K_s[WhichCountries[countryindex]][ActiveMild][PrevInf][serotype]; //// divide KPS_i by old KAM_i and multiply by new KAM_i (New_Param)
 			
 			PARAMS.K_s[WhichCountries[countryindex]][PhaseSeverity][PrevInf][serotype] = New_Param; //// don't be tempted to change PhaseSeverity here to ActiveMild or PassiveSevere. If not doing HOUSE.PS_Ks_Multiply_AM_Ks needs to apply to either PhaseSeverity
@@ -117,7 +117,7 @@ void AmendParams				(int &param_no, DType &New_Param, Params_Struct &PARAMS, con
 				//// recalculate SumRhoKProds for that PrevInf and PhaseSeverity for all countries in WhichCountries. 
 				Calc_SumRhoK_country_PhaseSeverity_PrevInf(PARAMS, HOUSE, WhichCountries[countryindex], PhaseSeverity, PrevInf);
 			
-				if (HOUSE.AdditiveSSASVEs & HOUSE.SeroSpecific_K_values &												//// In this scenario, sero Ks combine with sero VEs and age VEs, and are therefore included in the #pragma loop for l_Int_Vac_Haz. Hence change in K1 or K2 requires recalculation. 
+				if (HOUSE.AdditiveSSASVEs && HOUSE.SeroSpecific_K_values &&												//// In this scenario, sero Ks combine with sero VEs and age VEs, and are therefore included in the #pragma loop for l_Int_Vac_Haz. Hence change in K1 or K2 requires recalculation. 
 					(PrevInf > 0 /*|| HOUSE.ModelVariant == SIMPLE_NUMERICAL || HOUSE.ModelVariant == K_SEROPOS*/))		//// If SIMPLE_NUMERICAL or K_SEROPOS, K0 affects vaccine group. For VAC_SILENT it doesn't. AS_PRIME dealt with below. 
 				{
 					//// recalculate Kplus value
@@ -420,7 +420,7 @@ void AmendParams				(int &param_no, DType &New_Param, Params_Struct &PARAMS, con
 			for (int countryindex = 0; countryindex < HOUSE.WhichCountries.size(); countryindex++)
 				Calc_SumRhoEffNegs_c_BS_PS(HOUSE.WhichCountries[countryindex], PhaseSeverity, BaselineSeroStatus, PARAMS, HOUSE);
 
-		bool Scenario_1 = HOUSE.SeroSpecificEfficacies && HOUSE.ModelVariant == K_SEROPOS && HOUSE.SeroSpecific_K_values & BaselineSeroStatus == SeroPos;
+		bool Scenario_1 = HOUSE.SeroSpecificEfficacies && (HOUSE.ModelVariant == K_SEROPOS) && HOUSE.SeroSpecific_K_values && (BaselineSeroStatus == SeroPos);
 		bool Scenario_2 = HOUSE.AdditiveSSASVEs; //// true for either SSKs or not. 
 
 		if (Scenario_1 || Scenario_2) //// in all other scenarios, efficacy doesn't affect VacHazLikes
@@ -587,7 +587,7 @@ void UpdateOrReset_ParamsEtc	(int &param_no, const DATA_struct &DATA, Params_Str
 						if (HOUSE.ModelVariant == AS_PRIME)
 							ParamsToUpdate.VacHazLikes[WhichCountries[countryindex]][SeroNeg][PhaseSeverity] = CorrectPARAMS.VacHazLikes[WhichCountries[countryindex]][SeroNeg][PhaseSeverity];
 
-						if (HOUSE.ModelVariant == K_SEROPOS && HOUSE.SeroSpecific_K_values & HOUSE.SeroSpecificEfficacies) //// Do the same for KplusValues with Effs. Don't need last condition in if statement as PrevInf > 0; 
+						if ((HOUSE.ModelVariant == K_SEROPOS) && HOUSE.SeroSpecific_K_values && HOUSE.SeroSpecificEfficacies) //// Do the same for KplusValues with Effs. Don't need last condition in if statement as PrevInf > 0; 
 							for (int age = 0; age < HOUSE.HowManyAges; age++)
 								ParamsToUpdate.Meta_KplusValues[With_Effs][WhichCountries[countryindex]][age][PhaseSeverity] = CorrectPARAMS.Meta_KplusValues[With_Effs][WhichCountries[countryindex]][age][PhaseSeverity];
 					}
@@ -618,10 +618,10 @@ void UpdateOrReset_ParamsEtc	(int &param_no, const DATA_struct &DATA, Params_Str
 							ParamsToUpdate.KplusValues[WhichCountries[countryindex]][age][PhaseSeverity] = CorrectPARAMS.KplusValues[WhichCountries[countryindex]][age][PhaseSeverity];
 
 						///// and therefore VacHazLikes if necessary
-						if (HOUSE.ModelVariant == K_SEROPOS && HOUSE.SeroSpecificEfficacies)
+						if ((HOUSE.ModelVariant == K_SEROPOS) && HOUSE.SeroSpecificEfficacies)
 							ParamsToUpdate.VacHazLikes[WhichCountries[countryindex]][SeroPos][PhaseSeverity] = CorrectPARAMS.VacHazLikes[WhichCountries[countryindex]][SeroPos][PhaseSeverity];
 
-						if (HOUSE.ModelVariant == K_SEROPOS && HOUSE.SeroSpecific_K_values & HOUSE.SeroSpecificEfficacies /*&& BaselineSeroStatus == SeroPos*/) //// Do the same for KplusValues with Effs. Don't need last condition in if statement as PrevInf > 0; 
+						if ((HOUSE.ModelVariant == K_SEROPOS) && HOUSE.SeroSpecific_K_values && HOUSE.SeroSpecificEfficacies /*&& BaselineSeroStatus == SeroPos*/) //// Do the same for KplusValues with Effs. Don't need last condition in if statement as PrevInf > 0; 
 							for (int age = 0; age < HOUSE.HowManyAges; age++)
 								ParamsToUpdate.Meta_KplusValues[With_Effs][WhichCountries[countryindex]][age][PhaseSeverity] = CorrectPARAMS.Meta_KplusValues[With_Effs][WhichCountries[countryindex]][age][PhaseSeverity];
 					}
@@ -936,10 +936,10 @@ void UpdateOrReset_ParamsEtc	(int &param_no, const DATA_struct &DATA, Params_Str
 
 		ChooseMaxMinPhaseSeverities(HOUSE, PhaseSeverity);  //// changes HOUSE.MinMaxPhaseSeveritiesToLoopOver (potentially)
 
-		bool Scenario_1 = HOUSE.SeroSpecificEfficacies && HOUSE.ModelVariant == K_SEROPOS		&& HOUSE.SeroSpecific_K_values & BaselineSeroStatus == SeroPos;
+		bool Scenario_1 = HOUSE.SeroSpecificEfficacies && (HOUSE.ModelVariant == K_SEROPOS)		&& HOUSE.SeroSpecific_K_values && (BaselineSeroStatus == SeroPos);
 		bool Scenario_2 = HOUSE.SeroSpecificEfficacies && HOUSE.ASVE != Age_Option::INDEPENDENT && HOUSE.SSASVE_Additive; 
 
-		if (Scenario_1 | Scenario_2) //// in all other scenarios, efficacy doesn't affect VacHazLikes
+		if (Scenario_1 || Scenario_2) //// in all other scenarios, efficacy doesn't affect VacHazLikes
 			for (int PhaseSeverity = HOUSE.MinMaxPhaseSeveritiesToLoopOver[0]; PhaseSeverity < HOUSE.MinMaxPhaseSeveritiesToLoopOver[1]; PhaseSeverity++)
 				for (int country = 0; country < HOUSE.TotalCountries; country++)
 				{
@@ -1156,8 +1156,8 @@ void Change_Efficacy	(const DATA_struct &DATA, const Params_Struct &CurrentPARAM
 	// choose likelihood vector indices. 
 	DType Current_Efficacy, Proposed_Efficacy;
 
-	bool Scenario_1 = HOUSE.SeroSpecificEfficacies && HOUSE.ModelVariant == K_SEROPOS		&& HOUSE.SeroSpecific_K_values & BaselineSeroStatus == SeroPos;
-	bool Scenario_2 = HOUSE.SeroSpecificEfficacies && HOUSE.ASVE != Age_Option::INDEPENDENT && HOUSE.SSASVE_Additive; 
+	bool Scenario_1 = HOUSE.SeroSpecificEfficacies && (HOUSE.ModelVariant == K_SEROPOS)		&& HOUSE.SeroSpecific_K_values && (BaselineSeroStatus == SeroPos);
+	bool Scenario_2 = HOUSE.SeroSpecificEfficacies && (HOUSE.ASVE != Age_Option::INDEPENDENT) && HOUSE.SSASVE_Additive; 
 
 	for (int countryindex = 0; countryindex < HOUSE.NoCountriesToFit; countryindex++)
     {
@@ -1372,7 +1372,7 @@ void Change_Rho			(int &country, int &serotype, const DATA_struct &DATA, const P
 		for (int PhaseSeverity = 0; PhaseSeverity < HOUSE.HowManyCaseCategories; PhaseSeverity++)
 			for (int BaselineSeroStatus = 0; BaselineSeroStatus < HOUSE.HowManySeroStatuses; BaselineSeroStatus++)
 			{
-				bool Scenario_1 = /*HOUSE.SeroSpecificEfficacies && - already counted */ (HOUSE.ModelVariant == K_SEROPOS || HOUSE.ModelVariant == AS_PRIME) && HOUSE.SeroSpecific_K_values & BaselineSeroStatus == SeroPos;
+				bool Scenario_1 = /*HOUSE.SeroSpecificEfficacies && - already counted */ ((HOUSE.ModelVariant == K_SEROPOS) || (HOUSE.ModelVariant == AS_PRIME)) && HOUSE.SeroSpecific_K_values && (BaselineSeroStatus == SeroPos);
 				bool Scenario_2 = HOUSE.AdditiveSSASVEs; //// true for SSKs or not. 
 
 				//// IntVacHaz

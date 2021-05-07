@@ -391,7 +391,7 @@ void AddToSum_FU_Durations_fromThreads_AndCalculateAttackRates(int AR_PostSample
 			//// (reset and) sum the FU_duration for this trial phase and stratum. 
 			Sum_FU_duration_phase_stratum = 0;
 			for (int th = 0; th < HOUSE.max_threads; th++)
-				Sum_FU_duration_phase_stratum += SURVIVE.Sum_FU_Durations[th][TrialPhase][stratum];
+				Sum_FU_duration_phase_stratum += (int) SURVIVE.Sum_FU_Durations[th][TrialPhase][stratum];
 
 			//// for each DiseaseSeverity, divide MetaAttackRates (which is currently only the numerator) by Sum_FU_duration_phase_stratum (i.e. the denominator). 
 			for (int DiseaseSeverity = 0; DiseaseSeverity < SURVIVE.HowManyDiseaseSeverities; DiseaseSeverity++)
@@ -545,7 +545,7 @@ void GenerateSurvivalCurves					(const DATA_struct &DATA, const Params_Struct &P
 		int NoActiveDays_ThisPatient = NULL, NoActivePlusPassiveDays_ThisPatient = NULL, PassiveDayPostDose;
 
 		int patient = NULL; 
-		int MaxPatientIndex = AllPatients ? NPat : DATA.NonAugmentedIndices.size(); 
+		int MaxPatientIndex = AllPatients ? NPat : (int) (DATA.NonAugmentedIndices.size()); 
 
 		for (int patientindex = th; patientindex < MaxPatientIndex; patientindex += HOUSE.max_threads)
 		{
@@ -614,7 +614,7 @@ void GenerateSurvivalCurves					(const DATA_struct &DATA, const Params_Struct &P
 				for (int daypostdose = 1; daypostdose <= NoDaysToLoopOver; daypostdose++)
 				{
 					ConditionToCalcHazRatio = (std::any_of(SURVIVE.HRs_DaysPostDose.begin(), SURVIVE.HRs_DaysPostDose.end(), [&](int i) {return i == (daypostdose - 1); })); //// if day is equal to one of HRs_DaysPostDose that we want to calculate. 
-					if (CHAINS.HazRatiosOnly & !ConditionToCalcHazRatio) continue;
+					if (CHAINS.HazRatiosOnly && !ConditionToCalcHazRatio) continue;
 
 					/// add to apprppriate group population size. 
 					for (int stratum = 0; stratum < NumStrata_thisPatient; stratum++)
@@ -765,7 +765,7 @@ void GenerateSurvivalCurves					(const DATA_struct &DATA, const Params_Struct &P
 				for (int daypostdose = 1; daypostdose <= NoActiveDays_ThisPatient; daypostdose++) 
 				{
 					ConditionToCalcHazRatio = (std::any_of(SURVIVE.HRs_DaysPostDose.begin(), SURVIVE.HRs_DaysPostDose.end(), [&](int i) {return i == (daypostdose - 1); })); //// if day is equal to one of HRs_DaysPostDose that we want to calculate. 
-					if (CHAINS.HazRatiosOnly & !ConditionToCalcHazRatio) continue;
+					if (CHAINS.HazRatiosOnly && !ConditionToCalcHazRatio) continue;
 
 					/// add to apprppriate group population size. 
 					for (int stratum = 0; stratum < NumStrata_thisPatient; stratum++) 
@@ -841,7 +841,7 @@ void GenerateSurvivalCurves					(const DATA_struct &DATA, const Params_Struct &P
 					else	if (DATA.Vi_s[patient] == VaccineGroup) AM_IntHaz = (K_rho_AM * AM_IntBaseHaz_ThisDay) - (K_Eff_rho_AM * IntVacHaz_AM_RunningTotal);
 
 					////// check that SurviveActive is the same as exp(-AM_IntHaz) as it should be!
-					if ((SurviveActive != exp(-AM_IntHaz)) & (NoActiveDays_ThisPatient != 0))
+					if ((SurviveActive != exp(-AM_IntHaz)) && (NoActiveDays_ThisPatient != 0))
 						std::cout << "p" << patient << " S_Act " << SurviveActive << " e(-hz) " << exp(-AM_IntHaz) << " diff " << SurviveActive - exp(-AM_IntHaz) << endl;
 
 					int LastDay_This_Patient = (HOUSE.LTFU_SurvivalCurves) ? NoActivePlusPassiveDays_ThisPatient : SURVIVE.NoDaysOfFollowUp; 
@@ -849,7 +849,7 @@ void GenerateSurvivalCurves					(const DATA_struct &DATA, const Params_Struct &P
 					for (int daypostdose = NoActiveDays_ThisPatient + 1; daypostdose <= LastDay_This_Patient; daypostdose++)
 					{
 						ConditionToCalcHazRatio = (std::any_of(SURVIVE.HRs_DaysPostDose.begin(), SURVIVE.HRs_DaysPostDose.end(), [&](int i) {return i == (daypostdose - 1); })); //// if day is equal to one of HRs_DaysPostDose 
-						if (CHAINS.HazRatiosOnly & !ConditionToCalcHazRatio) continue;
+						if (CHAINS.HazRatiosOnly && !ConditionToCalcHazRatio) continue;
 
 						/// add to apprppriate group population size.  
 						for (int stratum = 0; stratum < NumStrata_thisPatient; stratum++)	SURVIVE.SC_WT.Threaded_Strata_Sizes[th][ThisPatientsStrata[stratum]][daypostdose]++;

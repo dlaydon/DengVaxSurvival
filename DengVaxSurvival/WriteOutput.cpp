@@ -38,7 +38,7 @@ void WriteParameterChainOutput			(string FILENAME, std::vector<string> NamesOfPa
 	}
 	else
 	{
-		outputfile << "logLikelihood" << "\t"; 	for (int param_no = 0; param_no < HOUSE.No_Parameters - 1; param_no++)	outputfile << NamesOfParameters[param_no] << "\t";	outputfile << NamesOfParameters[HOUSE.No_Parameters - 1];
+		outputfile << "logLikelihood" << "\t"; 	for (int param_no = 0; param_no < HOUSE.No_Parameters - 1; param_no++)	outputfile << NamesOfParameters[param_no] << "\t";	outputfile << NamesOfParameters[HOUSE.No_Parameters - INT64_C(1)];
 		outputfile << endl;
 	}
 
@@ -104,7 +104,7 @@ void Write_SPrev_LL_Chain(string FILENAME, DType *** Which_LL_SPrevChain, const 
 			for (int BS = 0; BS < HOUSE.HowManySeroStatuses; BS++)
 			{
 				outputfile << Which_LL_SPrevChain[index][country][BS];
-				if (country == HOUSE.TotalCountries + 2 & BS == HOUSE.HowManySeroStatuses - 1) outputfile << "\n";  else outputfile << "\t";
+				if ((country == HOUSE.TotalCountries + 2) && (BS == HOUSE.HowManySeroStatuses - 1)) outputfile << "\n";  else outputfile << "\t";
 			}
 	outputfile.close();
 }
@@ -131,7 +131,7 @@ void WriteSurvivalTable					(string FILENAME, DType **Object, int NRows, int NCo
 	//// colnames
 	File << "Age_Country_Arm_Hazard_Group" << "\t";	
 	for (int timepoint = 0; timepoint < NCols - 1; timepoint++) File << ColNames[timepoint] << "\t";
-	File << ColNames[NCols - 1] << endl;
+	File << ColNames[NCols - INT64_C(1)] << endl;
 
 	// values
 	for (int row = 0; row < NRows; row++)
@@ -162,7 +162,7 @@ void WriteSurivalOutput					(string OutputFolder, Survival_Struct &SURVIVE, Chai
 						SURVIVE.NoSubjectCategories, SURVIVE.NoDaysOfFollowUp + 1, SURVIVE.SurvivalTableRowNames, SURVIVE.SurvivalTableColNames);
 
 		//// passive phase survival tables. 
-		if (SURVIVE.CalculateSeparatePassivePhaseCurves & !CHAINS.HazRatiosOnly)
+		if (SURVIVE.CalculateSeparatePassivePhaseCurves && !CHAINS.HazRatiosOnly)
 			for (int DiseaseSeverity = 0; DiseaseSeverity < SURVIVE.HowManyDiseaseSeverities; DiseaseSeverity++)
 				for (int Statistic = 0; Statistic < 3; Statistic++)
 					WriteSurvivalTable(OutputFolder + SURVIVE.StatisticNames[Statistic] + "PassiveSurvivalTable" + ImSubOrNotString + HOUSE.OutputString + SURVIVE.DiseaseNames[DiseaseSeverity] + ".txt",
@@ -170,7 +170,7 @@ void WriteSurivalOutput					(string OutputFolder, Survival_Struct &SURVIVE, Chai
 						SURVIVE.NoSubjectCategories, SURVIVE.NoPassiveDaysFollowUp + 1, SURVIVE.SurvivalTableRowNames, SURVIVE.PassivePhaseSurvivalTableColNames);
 
 		//// attack rates (individual posterior samples)
-		if (SURVIVE.NoSurvivePostSamples > 0 & !CHAINS.HazRatiosOnly)
+		if ((SURVIVE.NoSurvivePostSamples > 0) && !CHAINS.HazRatiosOnly)
 			for (int TrialPhase = 0; TrialPhase < SURVIVE.HowManyTrialPhases; TrialPhase++)
 				for (int DiseaseSeverity = 0; DiseaseSeverity < SURVIVE.HowManyDiseaseSeverities; DiseaseSeverity++)
 					WriteSurvivalTable(OutputFolder + "AttackRates" + ImSubOrNotString + HOUSE.OutputString + SURVIVE.TrialPhaseNames[TrialPhase] + SURVIVE.DiseaseNames[DiseaseSeverity] + ".txt",	//// filename
@@ -361,7 +361,7 @@ void WriteEverythingForParticularChain (DATA_struct &DATA, Survival_Struct &SURV
 
 
 	//// Output Max Like and modal parameters (guard against their being empty)
-	if (CHAINS.MaxLike_ParamVec.size() > 0 & CHAINS.ModalPost_ParamVec.size() > 0)
+	if ((CHAINS.MaxLike_ParamVec.size()) > 0 && (CHAINS.ModalPost_ParamVec.size() > 0))
 	{
 		std::ofstream MaxLike_ModalPost_ParamChain;
 		MaxLike_ModalPost_ParamChain.open(CHAINS.OutputFolder + "ParamsMaxLikeModalPost" + HOUSE.OutputString + ".txt");
@@ -375,7 +375,7 @@ void WriteEverythingForParticularChain (DATA_struct &DATA, Survival_Struct &SURV
 	///// **** ///// ///// **** ///// ///// **** ///// ///// **** ///// ///// **** ///// ///// **** ///// 
 	///// **** ///// ///// **** /////		OUTPUT MEAN and MODAL POSTERIOR SURVIVAL CURVES AND ATTACK RATES (must be done after other output written. Much of SURVIVE structures are cumulative - applying GenerateSurvivalCurves function, even just to output a single sample, adds to cumulative means etc.)
 
-	if (CHAINS.Calc_SCsARsHRPs_ModalMaxLike & !CHAINS.HazRatiosOnly)
+	if (CHAINS.Calc_SCsARsHRPs_ModalMaxLike && !CHAINS.HazRatiosOnly)
 	{
 		//// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** //// **** 
 		//// **** modal posteroir survival curves and attack rates. (this is the modal posterior only if you consider non-logged knots as the parameters)

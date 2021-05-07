@@ -205,10 +205,10 @@ bool MCMC_step_param		(int param_no, const DATA_struct &DATA, Params_Struct &Cur
 	{
 		AmendParams		(CHAINS.SimulataneousUpdateParams[sim_update_param], CHAINS.Proposed_Param_Vector[sim_update_param], ProposedPARAMS, DATA, HOUSE);
 
-		if (HOUSE.ASVE != Age_Option::INDEPENDENT & HOUSE.SeroSpecificEfficacies) //// Ensure efficacy and multiplier combination does not result in >100% efficacy for all ages, serostatuses and serotypes. 
-			if (		IsParamAnEfficacy	(CHAINS.SimulataneousUpdateParams[sim_update_param], ProposedPARAMS.ParamNumbers)	| 
-						IsParamAn_ASVE_Param(param_no, ProposedPARAMS.ParamNumbers)												|
-						IsParamA_rho		(param_no, ProposedPARAMS.ParamNumbers)												|
+		if ((HOUSE.ASVE != Age_Option::INDEPENDENT) && HOUSE.SeroSpecificEfficacies) //// Ensure efficacy and multiplier combination does not result in >100% efficacy for all ages, serostatuses and serotypes. 
+			if (		IsParamAnEfficacy	(CHAINS.SimulataneousUpdateParams[sim_update_param], ProposedPARAMS.ParamNumbers)	|| 
+						IsParamAn_ASVE_Param(param_no, ProposedPARAMS.ParamNumbers)												||
+						IsParamA_rho		(param_no, ProposedPARAMS.ParamNumbers)												||
 						IsParamA_qval		(param_no, ProposedPARAMS.ParamNumbers)												)
 				for (int BS = 0; BS < HOUSE.HowManySeroStatuses; BS++)
 					for (int serotype = 0; serotype < HOUSE.N_STypes_VEs; serotype++)

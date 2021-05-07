@@ -119,13 +119,15 @@ template <typename TYPE> void Populate_3D_Array(TYPE ***	&OBJECT, TYPE Value, in
 ///////////////////////// ///////////////////////// ///////////////////////// ///////////////////////// ///////////////////////// ///////////////////////// ///////////////////////// ///////////////////////// 
 
 
-enum class Age_Option		{	INDEPENDENT	/*i.e. does not vary by age*/, HILL, CATEGORICAL /*varies by age group*/, SPLINE, SPLINE_LINE, SPLINE_STEP, CUBIC }; // if changing, change Convert_AS_String function too. 
+enum class Age_Option		{	INDEPENDENT	/*i.e. does not vary by age*/, HILL, CATEGORICAL /*varies by age group*/, SPLINE, SPLINE_LINE, SPLINE_STEP, CUBIC, ERROR}; // if changing, change Convert_AS_String function too. 
 enum class ExtImSub_Option	{	IGNORED		/*i.e. Imputed values ignored and model as before*/, 
 								AS_DATA		/*i.e. Imputed values maximum likelihood estimates of serostatus*/, 
-								AS_PROB		/*i.e. Imputed values simulations used as Prob(SeroPos) where available for Gibbs augmentation (but not in MH MCMC*/}; // if changing, change Convert_ExtImSub_String function too. 
+								AS_PROB		/*i.e. Imputed values simulations used as Prob(SeroPos) where available for Gibbs augmentation (but not in MH MCMC*/, // if changing, change Convert_ExtImSub_String function too. 
+								ERROR};
 enum class EffNegWane_Option {	DEFAULT		/*i.e. Even negative efficacies increase by "waning" to zero)*/,
 								FROM_ZERO	/*i.e. Negative efficacies start from zero and decline to that negative efficacy. */,
-								NO_WANE		/*i.e. Negative efficacies don't wane at all: they stay at their initial value. These are canonical results.*/ };
+								NO_WANE		/*i.e. Negative efficacies don't wane at all: they stay at their initial value. These are canonical results.*/,
+								ERROR};
 
 
 struct DATA_struct {
@@ -506,7 +508,7 @@ struct Housekeeping_Struct {
 	void Init_Skips					()
 	{
 		//// decide on skipping conditions and initializations for ASVE parameters
-		if (ASVE != Age_Option::INDEPENDENT & !SeroSpecificEfficacies)
+		if ((ASVE != Age_Option::INDEPENDENT) && !SeroSpecificEfficacies)
 		{
 			//// In these scenarios,  PosEfficacy and NegEfficacy variables (and the PARAMS.Efficacies array they go on to populate) won't be fitted, as ASVE params will deal with efficacy. 
 			//// But to save a million if statements, it's easier to include them in the likelihood calculations etc. but simply fix them at 1 so they alter nothing. 
@@ -549,7 +551,7 @@ struct Housekeeping_Struct {
 				Skip_AS_Prime_SPosRate = 1;
 			}
 		}
-		if (Single_SNeg_Eff & Single_SPos_Eff & SeroSpecificEfficacies)	Skip_qvals = 1;
+		if (Single_SNeg_Eff && Single_SPos_Eff && SeroSpecificEfficacies)	Skip_qvals = 1;
 	}
 	void InitializeCountriesFitted	()
 	{
@@ -946,7 +948,7 @@ struct Housekeeping_Struct {
 
 			OutputString = OutputString + ASVE_String;
 			if (!AS_VE_Homogeneous && !ASVE_OnlyOneSeroStatus)	OutputString = OutputString + "hetero";
-			if (SeroSpecificEfficacies & SSASVE_Additive)		OutputString = OutputString + "Add";
+			if (SeroSpecificEfficacies && SSASVE_Additive)		OutputString = OutputString + "Add";
 			if (ASVE_OnlyOneSeroStatus && ASVE_BS == SeroNeg)	OutputString = OutputString + "SNeg";
 			if (ASVE_OnlyOneSeroStatus && ASVE_BS == SeroPos)	OutputString = OutputString + "SPos" ;
 		}
@@ -1899,7 +1901,7 @@ struct Chains_Struct {
 			NumPosteriorSamples = (No_Iterations - BurnIn) / AddtoChainEveryHowManyIterations;
 		}
 
-		NumElementsOutside_CrI_Tails = NumPosteriorSamples * alpha * 0.5 + 1; // not quite true, but you want everything WITHIN the middle 95% CrI. If you don't add an extra element you will get the values immediately outsde the credible interval. 
+		NumElementsOutside_CrI_Tails = (int) (NumPosteriorSamples * alpha * 0.5 + 1); // not quite true, but you want everything WITHIN the middle 95% CrI. If you don't add an extra element you will get the values immediately outsde the credible interval. 
 		if (NumElementsOutside_CrI_Tails < 1) NumElementsOutside_CrI_Tails = 1; /// when you run proper analysis, 
 
 		Allocate_2D_Array(ParamChain, HOUSE.No_Parameters, NumPosteriorSamples);
@@ -1999,8 +2001,8 @@ public:
 	}
 	bool is_initialised()
 	{
-		return (Strata_Sizes != NULL) & (Threaded_Strata_Sizes != NULL) & (PostSample_SurvivalTables != NULL) & (Threaded_PostSample_SurvivalTables != NULL) & (FinalPosteriorSurvivalCurves != NULL) &
-			(MaxMin_Vals_ForTails != NULL) & (MaxMin_Indices_ForTails != NULL) & (CurveTails != NULL);
+		return (Strata_Sizes != NULL) && (Threaded_Strata_Sizes != NULL) && (PostSample_SurvivalTables != NULL) && (Threaded_PostSample_SurvivalTables != NULL) && (FinalPosteriorSurvivalCurves != NULL) &&
+			(MaxMin_Vals_ForTails != NULL) && (MaxMin_Indices_ForTails != NULL) && (CurveTails != NULL);
 	}
 };
 struct Survival_Struct {  //// version with mild and severe added. 
@@ -2253,7 +2255,7 @@ struct Survival_Struct {  //// version with mild and severe added.
 			HRs_DaysPostDose.push_back(760);
 			HRs_DaysPostDose.push_back(910);
 			HRs_DaysPostDose.push_back(1095);	 
-			HRs_NumDaysPostDoseToCalculate = HRs_DaysPostDose.size(); 
+			HRs_NumDaysPostDoseToCalculate = (int) HRs_DaysPostDose.size(); 
 
 			//// Rownames & colnames of HR tables
 			for (int agegroup = 0; agegroup < HRs_NumAgeGroups; agegroup++)	// rownames

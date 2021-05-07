@@ -26,21 +26,30 @@ Age_Option			Convert_AS_String			(const std::string& OptionString)
 	else if (OptionString == "SPLINE_LINE"	) return Age_Option::SPLINE_LINE	;
 	else if (OptionString == "SPLINE_STEP"	) return Age_Option::SPLINE_STEP	;
 	else if (OptionString == "CUBIC"		) return Age_Option::CUBIC			;
-	else std::cerr << endl << "Convert_AS_String ERROR: String not recognized" << endl; 
+	else {
+		std::cerr << endl << "Convert_AS_String ERROR: String not recognized" << endl; 
+		return Age_Option::ERROR;
+	}
 }
 ExtImSub_Option		Convert_ExtImSub_String		(const std::string& OptionString)
 {
 		 if (OptionString == "IGNORED"	) return ExtImSub_Option::IGNORED		;
 	else if (OptionString == "AS_DATA"	) return ExtImSub_Option::AS_DATA		;
 	else if (OptionString == "AS_PROB"	) return ExtImSub_Option::AS_PROB		;
-	else std::cerr << endl << "Convert_AS_String ERROR: String not recognized" << endl; 
+	else {
+		std::cerr << endl << "Convert_AS_String ERROR: String not recognized" << endl; 
+		return ExtImSub_Option::ERROR;
+	}
 }
 EffNegWane_Option	Convert_EffNegWane_String	(const std::string& OptionString)
 {
 		 if (OptionString == "DEFAULT"		) return EffNegWane_Option::DEFAULT			;
 	else if (OptionString == "FROM_ZERO"	) return EffNegWane_Option::FROM_ZERO		;
 	else if (OptionString == "NO_WANE"		) return EffNegWane_Option::NO_WANE			;
-	else std::cerr << endl << "Convert_NegEffWane_String ERROR: String not recognized" << endl;
+	else {
+		std::cerr << endl << "Convert_NegEffWane_String ERROR: String not recognized" << endl;
+		return EffNegWane_Option::ERROR;
+	}
 }
 
 template <typename TYPE> void DeAllocate_2D_Array	(TYPE **  &OBJECT, int Dim1) 
@@ -61,7 +70,7 @@ void CreateAndPopulateKnots				(Params_Struct &PARAMS, const Housekeeping_Struct
 
 	DType NoUnitsInYear = 1, IntervalsPerUnit = 3; 
 
-	bool ImportCondition = HOUSE.SFU & !HOUSE.PASSIVE_PHASE_ONLY & HOUSE.ActiveOrPassivePhase == DO_ACTIVE_AND_PASSIVE;
+	bool ImportCondition = HOUSE.SFU && !HOUSE.PASSIVE_PHASE_ONLY && (HOUSE.ActiveOrPassivePhase == DO_ACTIVE_AND_PASSIVE);
 
 	if (ImportCondition)
 	{
@@ -75,7 +84,7 @@ void CreateAndPopulateKnots				(Params_Struct &PARAMS, const Housekeeping_Struct
 	for (int country = 0; country < HOUSE.TotalCountries; country++)
 		for (int knot = 0; knot < HOUSE.KnotsPerCountry; knot++)
 		{
-			PARAMS.xKnots[country][knot] = (NoUnitsInYear / IntervalsPerUnit) * (knot + 1);
+			PARAMS.xKnots[country][knot] = (NoUnitsInYear / IntervalsPerUnit) * (knot + INT64_C(1));
 			if (!ImportCondition)
 				PARAMS.yKnots[country][knot] = 0.05;
 		}
@@ -341,21 +350,21 @@ void InitializeRelativeRisks			(int &ParamCounter, Params_Struct &PARAMS, const 
 
 		if (HOUSE.FSKs_Ratio_SetNum == 0) // default
 		{
-			PARAMS.Fixed_SevereK_ratios[0] = 0.25;
-			PARAMS.Fixed_SevereK_ratios[1] = 1;
+			PARAMS.Fixed_SevereK_ratios[0] = (DType) 0.25;
+			PARAMS.Fixed_SevereK_ratios[1] = (DType) 1;
 			PARAMS.Fixed_SevereK_ratios[2] = (DType)(PARAMS.Fixed_SevereK_ratios[0] / (DType)4);
 		}
 		else if (HOUSE.FSKs_Ratio_SetNum == 1)
 		{
-			PARAMS.Fixed_SevereK_ratios[0] = 0.125;
-			PARAMS.Fixed_SevereK_ratios[1] = 1;
+			PARAMS.Fixed_SevereK_ratios[0] = (DType) 0.125;
+			PARAMS.Fixed_SevereK_ratios[1] = (DType) 1;
 			PARAMS.Fixed_SevereK_ratios[2] = (DType)((DType)1 / (DType)16);
 		}
 		else if (HOUSE.FSKs_Ratio_SetNum == 2)
 		{
-			PARAMS.Fixed_SevereK_ratios[0] = 0.25;
-			PARAMS.Fixed_SevereK_ratios[1] = 1;
-			PARAMS.Fixed_SevereK_ratios[2] = 0.25;
+			PARAMS.Fixed_SevereK_ratios[0] = (DType) 0.25;
+			PARAMS.Fixed_SevereK_ratios[1] = (DType) 1;
+			PARAMS.Fixed_SevereK_ratios[2] = (DType) 0.25;
 		}
 		else std::cerr << "Init Params Error: HOUSE.FSKs_Ratio_SetNum value not recognized" << endl;
 
@@ -418,7 +427,7 @@ void Initialize_AS_PrimingParams		(int &ParamCounter, Params_Struct &PARAMS, con
 void InitializeEfficacies				(int &ParamCounter, Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE)
 {
 	//// decide on skipping conditions and initializations for Efficacy parameters, if doing age specific vaccine efficacy.
-	if (HOUSE.ASVE != Age_Option::INDEPENDENT & !HOUSE.SeroSpecificEfficacies)
+	if ((HOUSE.ASVE != Age_Option::INDEPENDENT) && !HOUSE.SeroSpecificEfficacies)
 	{
 		//// In these scenarios, PosEfficacy and NegEfficacy variables (and the PARAMS.Efficacies array they go on to populate) won't be fitted, as your ASVE params will deal with efficacy. 
 		//// But to save lots of if statements, easier to include them in the likelihood calculations etc. but simply fix them at 1 so they alter nothing. 
@@ -452,7 +461,7 @@ void InitializeEfficacies				(int &ParamCounter, Params_Struct &PARAMS, const Ho
 		for (int serotype = 0; serotype < HOUSE.N_STypes_VEs; serotype++)
 		{
 			//// Populate
-			if (HOUSE.ASVE != Age_Option::INDEPENDENT & HOUSE.SeroSpecificEfficacies & (serotype == 0 || (HOUSE.Single_SNeg_Eff & HOUSE.Single_SPos_Eff))) 
+			if ((HOUSE.ASVE != Age_Option::INDEPENDENT) && HOUSE.SeroSpecificEfficacies && ((serotype == 0) || (HOUSE.Single_SNeg_Eff && HOUSE.Single_SPos_Eff))) 
 			{
 				//// need serotype 1 (0 in Cpp) to be the baseline. 
 				//// If additive, need to add 0 to age efficacy profile to leave it unchanged. But if multiplicative, need to multiply age efficacy profile by 1 to leave it unchanged. 
@@ -470,7 +479,7 @@ void InitializeEfficacies				(int &ParamCounter, Params_Struct &PARAMS, const Ho
 			//// Make String
 			if (HOUSE.PSVEs) PhaseSeverityString_Dummy = HOUSE.PhaseSeverity_strings[PhaseSeverity] + "_"; else PhaseSeverityString_Dummy = ""; 
 
-			bool AgeContinueCondition = HOUSE.ASVE == Age_Option::INDEPENDENT || !HOUSE.SeroSpecificEfficacies || serotype != 0 || (HOUSE.ASVE_FitAllSero_VEs & HOUSE.Skip_All_ASVEs); //// Fit param if not considering age or SSVEs, or if seroype > 0 (because if fitting age and serotype effects need only skip first serotype). Last two conditions are for debugging. 
+			bool AgeContinueCondition = (HOUSE.ASVE == Age_Option::INDEPENDENT) || (!HOUSE.SeroSpecificEfficacies) || (serotype != 0) || (HOUSE.ASVE_FitAllSero_VEs && HOUSE.Skip_All_ASVEs); //// Fit param if not considering age or SSVEs, or if seroype > 0 (because if fitting age and serotype effects need only skip first serotype). Last two conditions are for debugging. 
 
 			//// SeroNeg 	//// do  SeroNeg first as helpful for SeroNeg to be zero when doing modulo arithmetic. 
 			PARAMS.ParamVec.			push_back(PARAMS.Efficacies[PhaseSeverity][serotype][SeroNeg]);
@@ -583,14 +592,14 @@ void InitializeWaningParamsAndValues	(int &ParamCounter, Params_Struct &PARAMS, 
 					/*ORIG*/
 					if (HOUSE.AS_Waning_KnotSet == 0) /// i.e. default knot set 
 					{
-						if (BaselineSeroStatus == SeroNeg & !HOUSE.Skip_NegWaning) //// i.e. don't overwrite WaningParamValue if not fitting parameter as then you'll be stuck with whatever you input here, rather than from command line. 
+						if ((BaselineSeroStatus == SeroNeg) && !HOUSE.Skip_NegWaning) //// i.e. don't overwrite WaningParamValue if not fitting parameter as then you'll be stuck with whatever you input here, rather than from command line. 
 						{
 								 if (WaningParamNo == 0)	WaningParamValue = 4;
 							else if (WaningParamNo == 1)	WaningParamValue = 4;
 							else if (WaningParamNo == 2)	WaningParamValue = 6;
 							else if (WaningParamNo == 3)	WaningParamValue = 8;
 						}
-						else if (BaselineSeroStatus == SeroPos & !HOUSE.Skip_PosWaning)
+						else if ((BaselineSeroStatus == SeroPos) && !HOUSE.Skip_PosWaning)
 						{
 								 if (WaningParamNo == 0)	WaningParamValue = 9;
 							else if (WaningParamNo == 1)	WaningParamValue = 10;
@@ -627,13 +636,13 @@ void InitializeWaningParamsAndValues	(int &ParamCounter, Params_Struct &PARAMS, 
 				//// decide on skipping conditions (update when necessary) and add to ParamNosYouWillFit if appropriate.
 				if (BaselineSeroStatus == SeroNeg)
 				{
-						 if (ParamIsADurationOrRate 			&& (HOUSE.Skip_NegWaning	|| (HOUSE.AgeEffectsSame_Waning & WaningParamNo != 0))) SkipParam = true;	/// either you're skipping all Neg Waning, or your fixing them to be the same as each other (controlled in FindSimulataneousUpdateParams function), in which case you need only the first one. 
+						 if (ParamIsADurationOrRate 			&& (HOUSE.Skip_NegWaning	|| (HOUSE.AgeEffectsSame_Waning && (WaningParamNo != 0)))) SkipParam = true;	/// either you're skipping all Neg Waning, or your fixing them to be the same as each other (controlled in FindSimulataneousUpdateParams function), in which case you need only the first one. 
 					else if (WaningParamNo == Halflife_Index	&& HOUSE.Skip_NegWaning_HLife	) SkipParam = true;
 					else if (WaningParamNo == Power_Index		&& HOUSE.Skip_NegWaning_Power	) SkipParam = true;
 				}
 				else if (BaselineSeroStatus == SeroPos)
 				{
-						 if (ParamIsADurationOrRate 			&& (HOUSE.Skip_PosWaning	|| (HOUSE.AgeEffectsSame_Waning & WaningParamNo != 0))) SkipParam = true; /// either you're skipping all Pos Waning, or your fixing them to be the same as each other (controlled in FindSimulataneousUpdateParams function), in which case you need only the first one. 
+						 if (ParamIsADurationOrRate 			&& (HOUSE.Skip_PosWaning	|| (HOUSE.AgeEffectsSame_Waning && (WaningParamNo != 0)))) SkipParam = true; /// either you're skipping all Pos Waning, or your fixing them to be the same as each other (controlled in FindSimulataneousUpdateParams function), in which case you need only the first one. 
 					else if (WaningParamNo == Halflife_Index	&& HOUSE.Skip_PosWaning_HLife	) SkipParam = true;
 					else if (WaningParamNo == Power_Index		&& HOUSE.Skip_PosWaning_Power	) SkipParam = true;
 				}
@@ -839,16 +848,16 @@ void InitializeASVEParams				(int &ParamCounter, Params_Struct &PARAMS, const Ho
 				{
 					if (BaselineSeroStatus == SeroNeg)	PARAMS.ASVE_Params[BaselineSeroStatus][AgeEffParam] = 0.27;
 					if (BaselineSeroStatus == SeroPos)	
-						if (HOUSE.SeroSpecificEfficacies & HOUSE.SSASVE_Additive) 
+						if (HOUSE.SeroSpecificEfficacies && HOUSE.SSASVE_Additive) 
 							PARAMS.ASVE_Params[BaselineSeroStatus][AgeEffParam] = 0.3;
 						else
 							PARAMS.ASVE_Params[BaselineSeroStatus][AgeEffParam] = 0.5;
 
 					///// Reset yKnots (i.e. AgeEffParam) for splines to make them start at decent locations. 
-					if (HOUSE.SeroSpecificEfficacies & HOUSE.ASVE_FitAllSero_VEs & HOUSE.Skip_All_ASVEs)	PARAMS.ASVE_Params[BaselineSeroStatus][AgeEffParam] = 1; 
+					if (HOUSE.SeroSpecificEfficacies && HOUSE.ASVE_FitAllSero_VEs && HOUSE.Skip_All_ASVEs)	PARAMS.ASVE_Params[BaselineSeroStatus][AgeEffParam] = 1; 
 					else if (HOUSE.ASVE == Age_Option::SPLINE || HOUSE.ASVE == Age_Option::SPLINE_STEP || HOUSE.ASVE == Age_Option::SPLINE_LINE || HOUSE.ASVE == Age_Option::CUBIC)
 					{
-						if (!HOUSE.ASVE_AdditionalKnots & !HOUSE.SSASVE_Additive) /// i.e. default knot set 
+						if (!HOUSE.ASVE_AdditionalKnots && !HOUSE.SSASVE_Additive) /// i.e. default knot set 
 						{
 							/*ORIG*/
 							if (BaselineSeroStatus == SeroNeg)			//// i.e. default knot set 
@@ -877,7 +886,7 @@ void InitializeASVEParams				(int &ParamCounter, Params_Struct &PARAMS, const Ho
 
 					int AgeEffectsSameDummyParamNo = HOUSE.ASVE == Age_Option::CATEGORICAL ? 1 : 0; 
 
-					bool SkipParam = HOUSE.Skip_All_ASVEs || (HOUSE.Skip_SNeg_ASVEs & BaselineSeroStatus == SeroNeg) || (HOUSE.Skip_SPos_ASVEs & BaselineSeroStatus == SeroPos);
+					bool SkipParam = HOUSE.Skip_All_ASVEs || (HOUSE.Skip_SNeg_ASVEs && (BaselineSeroStatus == SeroNeg)) || (HOUSE.Skip_SPos_ASVEs && (BaselineSeroStatus == SeroPos));
 
 					if (AgeEffParam > 0 || HOUSE.ASVE == Age_Option::SPLINE || HOUSE.ASVE == Age_Option::SPLINE_LINE || HOUSE.ASVE == Age_Option::SPLINE_STEP || HOUSE.ASVE == Age_Option::CUBIC) 
 						if (!SkipParam)
@@ -1039,19 +1048,19 @@ void Initialize_AS_Haz_Params			(int &ParamCounter, Params_Struct &PARAMS, const
 			{
 				if (HOUSE.AS_Haz_AdditionalKnots)
 				{
-					PARAMS.Age_HazMult_xKnots[0] = 2.0;
-					PARAMS.Age_HazMult_xKnots[1] = 5.9;
-					PARAMS.Age_HazMult_xKnots[2] = 6.1;
-					PARAMS.Age_HazMult_xKnots[3] = 11.9;
-					PARAMS.Age_HazMult_xKnots[4] = 12.1;
-					if (HOUSE.AS_Haz != Age_Option::SPLINE_STEP) PARAMS.Age_HazMult_xKnots[5] = 16.0;
+					PARAMS.Age_HazMult_xKnots[0] = (DType) 2.0;
+					PARAMS.Age_HazMult_xKnots[1] = (DType)5.9;
+					PARAMS.Age_HazMult_xKnots[2] = (DType)6.1;
+					PARAMS.Age_HazMult_xKnots[3] = (DType)11.9;
+					PARAMS.Age_HazMult_xKnots[4] = (DType)12.1;
+					if (HOUSE.AS_Haz != Age_Option::SPLINE_STEP) PARAMS.Age_HazMult_xKnots[5] = (DType) 16.0;
 				}
 				else
 				{
-					PARAMS.Age_HazMult_xKnots[0] = 2.0;
-					PARAMS.Age_HazMult_xKnots[1] = 6.0;
-					PARAMS.Age_HazMult_xKnots[2] = 12.0;
-					if (HOUSE.AS_Haz != Age_Option::SPLINE_STEP) PARAMS.Age_HazMult_xKnots[3] = 16.0;
+					PARAMS.Age_HazMult_xKnots[0] = (DType) 2.0;
+					PARAMS.Age_HazMult_xKnots[1] = (DType) 6.0;
+					PARAMS.Age_HazMult_xKnots[2] = (DType) 12.0;
+					if (HOUSE.AS_Haz != Age_Option::SPLINE_STEP) PARAMS.Age_HazMult_xKnots[3] = (DType) 16.0;
 				}
 
 				if (HOUSE.AS_Haz == Age_Option::SPLINE)
@@ -1086,7 +1095,7 @@ void Initialize_BS_BaseHazMults			(int &ParamCounter, Params_Struct &PARAMS, con
 		if (!HOUSE.Skip_BS_BaseHazMult)
 		{
 			string SeroStatusName = (HOUSE.Which_BS_BaseHazMult == SeroPos) ? "SeroPos" : "SeroNeg";
-			PARAMS.ParamVec.push_back(PARAMS.BS_BaseHazMults[HOUSE.Which_BS_BaseHazMult]);
+			PARAMS.ParamVec.push_back((double) (PARAMS.BS_BaseHazMults[HOUSE.Which_BS_BaseHazMult]));
 			PARAMS.NamesOfParameters.push_back(SeroStatusName + "BaseHazMult");
 
 			PARAMS.ParamNosYouWillFit.push_back(ParamCounter);
@@ -1119,7 +1128,7 @@ void Initialize_Rhos					(int &ParamCounter, Params_Struct &PARAMS, const Housek
 				for (int serotype = 0; serotype < HOUSE.N_STypes - 1; serotype++) //// note the minus 1. Proportions of 4 serotypes uniquely determined by 3 parameters. Also no need to do serotype plus 1 for names now that these don't explicitly refer to proportions. 
 				{
 					//// populate ParamVec and NamesOfParameters
-					PARAMS.ParamVec.			push_back( (DType (1) / DType (HOUSE.N_STypes - serotype))); //// first qval will be 1/4, second = 1/3, third = 1/2. Works out that then all proportions equal. 
+					PARAMS.ParamVec.			push_back( (DType (1) / DType (HOUSE.N_STypes - _I64(serotype)))); //// first qval will be 1/4, second = 1/3, third = 1/2. Works out that then all proportions equal. 
 					PARAMS.NamesOfParameters.	push_back("qval_" + std::to_string(country) + "_" + std::to_string(serotype));
 
 					if (!HOUSE.Skip_qvals) //// if not skipping qvalues
@@ -1272,14 +1281,14 @@ void PopulateParamRanges				(Params_Struct &PARAMS, Housekeeping_Struct &HOUSE)
 		else	if (IsParamAnEfficacy	(param, PARAMS.ParamNumbers) || IsParamAn_atInf_Efficacy(param, PARAMS.ParamNumbers))	
 		{
 			int BaselineSeroStatus = Find_SeroStatus_FromEffParam(param, HOUSE, PARAMS.ParamNumbers);
-			if (HOUSE.ASVE != Age_Option::INDEPENDENT & HOUSE.SeroSpecificEfficacies == 1) ///// in this scenario, the parameters you've labelled as vaccine efficacies are actually multipliers or intercepts (the AgeEffMults are the real efficacies). hence why they can go higher than 1. 
+			if ((HOUSE.ASVE != Age_Option::INDEPENDENT) && (HOUSE.SeroSpecificEfficacies)) ///// in this scenario, the parameters you've labelled as vaccine efficacies are actually multipliers or intercepts (the AgeEffMults are the real efficacies). hence why they can go higher than 1. 
 			{
 				if (HOUSE.SSASVE_Additive)
 				{
 					/*Lower Bounds*/
 					// true for both seropositive and seronegative. Must allow efficacy of serotypes 2,3,4 to be LESS than serotype 1. 
 
-					if (BaselineSeroStatus = SeroNeg & HOUSE.IntialParRanges.SNegEff_1[LowerBound] < 0)  PARAMS.ParamRanges[LowerBound][param] = HOUSE.IntialParRanges.SNegEff_1[LowerBound]; 
+					if ((BaselineSeroStatus == SeroNeg) && (HOUSE.IntialParRanges.SNegEff_1[LowerBound] < 0))  PARAMS.ParamRanges[LowerBound][param] = HOUSE.IntialParRanges.SNegEff_1[LowerBound]; 
 					else PARAMS.ParamRanges[LowerBound][param] = -1;
 
 					/*Upper Bounds*/
@@ -1287,7 +1296,7 @@ void PopulateParamRanges				(Params_Struct &PARAMS, Housekeeping_Struct &HOUSE)
 				}
 				else  // i.e. multiplicative
 				{  
-					if (BaselineSeroStatus = SeroNeg & HOUSE.IntialParRanges.SNegEff_1[LowerBound] < 0)  PARAMS.ParamRanges[LowerBound][param] = -5; else PARAMS.ParamRanges[LowerBound][param] = 0;
+					if ((BaselineSeroStatus == SeroNeg) && (HOUSE.IntialParRanges.SNegEff_1[LowerBound] < 0))  PARAMS.ParamRanges[LowerBound][param] = -5; else PARAMS.ParamRanges[LowerBound][param] = 0;
 					PARAMS.ParamRanges[UpperBound][param] = 6;
 				}
 			}
@@ -1417,7 +1426,7 @@ void PopulateStandardDevs				(Params_Struct &PARAMS, const Housekeeping_Struct &
 		else	if (IsParamA_rho		(param, PARAMS.ParamNumbers)													)	PARAMS.ProposalStandDevs[param] = 0.1		;
 		else	if (IsParamAnEfficacy	(param, PARAMS.ParamNumbers) || IsParamAn_atInf_Efficacy(param, PARAMS.ParamNumbers	))	
 		{
-			if (HOUSE.ASVE != Age_Option::INDEPENDENT & HOUSE.SeroSpecificEfficacies == 1 & !HOUSE.SSASVE_Additive)	PARAMS.ProposalStandDevs[param] = 0.25; ///// in this scenario, the parameters you've labelled as vaccine efficacies are actually multipliers (the AgeEffMults are the real efficacies). 
+			if ((HOUSE.ASVE != Age_Option::INDEPENDENT) && (HOUSE.SeroSpecificEfficacies == 1) && !HOUSE.SSASVE_Additive)	PARAMS.ProposalStandDevs[param] = 0.25; ///// in this scenario, the parameters you've labelled as vaccine efficacies are actually multipliers (the AgeEffMults are the real efficacies). 
 			else																									PARAMS.ProposalStandDevs[param] = 0.1;
 		}
 		else	if (IsParamAHillHalflife(param, PARAMS.ParamNumbers)													)	PARAMS.ProposalStandDevs[param] = 1		;
