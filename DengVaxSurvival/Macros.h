@@ -3,8 +3,8 @@
 
 using namespace std;
 
-#define USE_CLUSTER			//////////////// REMEMBER TO SET COMPILER TO INTEL
-#define USE_COMMAND_LINE
+//#define USE_CLUSTER			//////////////// REMEMBER TO SET COMPILER TO INTEL
+//#define USE_COMMAND_LINE
 
 
 /// FLAGS AND INDICES.

@@ -270,6 +270,7 @@ struct Housekeeping_Struct {
 	char ModelVariant			= VAC_SILENT				;		//// choose between SIMPLE_ANALYTICAL, SIMPLE_NUMERICAL, K_SEROPOS, DROP_K, and VAC_SILENT. 
 	char SingleOrMultiDose		= MULTI_DOSE				;
 	char ActiveOrPassivePhase	= DO_ACTIVE_AND_PASSIVE		;
+	bool PASSIVE_PHASE_ONLY		= false						;
 	char MildAndSevere			= TREATED_EQUALLY			;
 	bool PS_Ks_Multiply_AM_Ks	= false						;		//// if true, then PassiveSevere Ks are given by KAM_i x KPS_i. if false (default), PassiveSevere Ks are given by KPS_i.
 	char LinKnts				= 0							;		
@@ -278,6 +279,8 @@ struct Housekeeping_Struct {
 	bool FitWaningRate			= 0							;
 	bool SeroSpecificEfficacies	= 0							;
 	bool SeroSpecific_K_values	= 0							;
+	bool AdjHaz					= 0							;		//// Include multiplier of baseline hazard for particular baselineserostatus (given by HOUSE.Which_BS_BaseHazMult)? Baseline hazard is sum of all hazards for all serotypes. But seropositive individuals have been exposed to at least one serotype already, and therefore have reduced hazard. This boolean decides if you should inclde a multiplier of the baseline hazard for seropositives.  
+	int Which_BS_BaseHazMult	= SeroPos					;
 
 	bool SS_KAM_0				= true						;		//// relevant only if SeroSpecific_K_values == true. Should KAM_0s be serotype specific?
 	const bool SS_KAM_1			= true						;		//// relevant only if SeroSpecific_K_values == true. Should KAM_1s be serotype specific? NEVER change this as it is the baseline. 
@@ -343,24 +346,14 @@ struct Housekeeping_Struct {
 	bool AS_Waning_Homogeneous	= false;		//// Will you allow the relationship between efficacy and age to differ by baseline serostatus - default is yes. 
 	int NumSeroStatuses_AS_Waning = NULL;
 
-
-	bool AdjHaz					= 0							;		//// Include multiplier of baseline hazard for particular baselineserostatus (given by HOUSE.Which_BS_BaseHazMult)? Baseline hazard is sum of all hazards for all serotypes. But seropositive individuals have been exposed to at least one serotype already, and therefore have reduced hazard. This boolean decides if you should inclde a multiplier of the baseline hazard for seropositives.  
-	int Which_BS_BaseHazMult	= SeroPos					;
-
-
-
 	bool Empirical_SeroPrevs	= false	;
 	bool AreWeAugmenting		= 1		;			///// default is true. If false, then CHAINS.AreWeAugmenting and WBIC_CHAINS.AreWeAugmenting set to false. 
-
 
 	bool PSVEs					= false						;
 	int NumEffsPer_BS_And_SType = 1							;		//// Need this for param number functions. i.e. if you model different efficacy values for different trial phases (if PSVEs == true). If so, then value is HowManyCaseCategories (and so must be reset if HowManyCaseCategories is)
 	int * MinMaxPhaseSeveritiesToLoopOver = new int[2]()	;		//// For phase severity dependant vaccine efficacies. 
-	bool PASSIVE_PHASE_ONLY		= false						;
 
 	bool ResidEffs				= false						;		//// i.e. Efficacy declines not to zero but to some other VE_min
-
-
 	bool AllDosesRequired_SNeg		= false					;		//// Are all three doses reqired before any vaccine efficacy? These values are only used for data input (stored in AllDosesRequired_BS array), and output string. These values trump those that populate AllDosesRequired_AG_BS array. 
 	bool AllDosesRequired_SPos		= false					;		//// Are all three doses reqired before any vaccine efficacy? These values are only used for data input (stored in AllDosesRequired_BS array), and output string. These values trump those that populate AllDosesRequired_AG_BS array. 
 
@@ -380,10 +373,7 @@ struct Housekeeping_Struct {
 	bool SingleEff						= false				;		//// Will you fit a single efficacy parameter, or at least keep VE- and VE+ the same? 
 
 	ExtImSub_Option ExtImSub			= ExtImSub_Option::IGNORED;
-
 	string SerotypeString		= "";
-	string KnotsInputFilename	= "MeanKnots_Initial.txt"			;
-	string HH_InputFilename		= "HistHazardValues.txt"			;
 	string DefaultParamRangeFileName	= "ParamRanges_Default"		; 
 	string ParamRangeFileName			= DefaultParamRangeFileName	; //// useful for ParamRangeFileName to be separate from DefaultParamRangeFileName in CreateOutputString function. 
 
@@ -604,15 +594,10 @@ struct Housekeeping_Struct {
 			CYD_14_countries.push_back(Combined_CYD_14_15_country); //// think you want to use CYD_14_countries as this is unaffected by hospitalisation K's. 
 		}
 
-		if (PooledCountries)		//// note that mean knots only for SFU. 
-		{
-			KnotsInputFilename	= "MeanKnots_Initial_PooledCountries.txt";
-			HH_InputFilename		= "HistHazardValues_PooledCountries.txt";
-		}
 		std::cerr << "Fitting countries: ";
+		bool condition;
 		for (int country = 0; country < TotalCountries; country++)
 		{
-			bool condition;
 			condition = std::any_of(WhichCountries.begin(), WhichCountries.end(), [&](int i) {	return i == country;	});
 			if (condition) std::cerr << country << " ";
 		}

@@ -70,23 +70,11 @@ void CreateAndPopulateKnots				(Params_Struct &PARAMS, const Housekeeping_Struct
 
 	DType NoUnitsInYear = 1, IntervalsPerUnit = 3; 
 
-	bool ImportCondition = HOUSE.SFU && !HOUSE.PASSIVE_PHASE_ONLY && (HOUSE.ActiveOrPassivePhase == DO_ACTIVE_AND_PASSIVE);
-
-	if (ImportCondition)
-	{
-		ifstream KnotInput; KnotInput.open(HOUSE.KnotsInputFilename);
-		for (int country = 0; country < HOUSE.TotalCountries; country++)
-			for (int knot = 0; knot < HOUSE.KnotsPerCountry; knot++)
-				KnotInput >> PARAMS.yKnots[country][knot];
-		KnotInput.close();
-	}
-
 	for (int country = 0; country < HOUSE.TotalCountries; country++)
 		for (int knot = 0; knot < HOUSE.KnotsPerCountry; knot++)
 		{
 			PARAMS.xKnots[country][knot] = (NoUnitsInYear / IntervalsPerUnit) * (knot + INT64_C(1));
-			if (!ImportCondition)
-				PARAMS.yKnots[country][knot] = 0.05;
+			PARAMS.yKnots[country][knot] = 0.05;
 		}
 }
 void CreateAndPopulateSplineCoeffs		(Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE)
@@ -1222,7 +1210,6 @@ void PopulateParamRanges				(Params_Struct &PARAMS, Housekeeping_Struct &HOUSE)
 			else	if (ParamName == "qval"						)	{ HOUSE.IntialParRanges.qval					[LowerBound] = std::stod(LowerBound_String)		;  HOUSE.IntialParRanges.qval					[UpperBound] = std::stod(UpperBound_String); }
   			else	if (ParamName == "rho"						)	{ HOUSE.IntialParRanges.rho						[LowerBound] = std::stod(LowerBound_String)		;  HOUSE.IntialParRanges.rho					[UpperBound] = std::stod(UpperBound_String); }
   			else	if (ParamName == "BS_BaseHazMult"			)	{ HOUSE.IntialParRanges.BS_BaseHazMult			[LowerBound] = std::stod(LowerBound_String)		;  HOUSE.IntialParRanges.BS_BaseHazMult			[UpperBound] = std::stod(UpperBound_String); }
-			else	std::cerr << "PopulateParamRanges ERROR: ParamName " << ParamName << " not recognized from " + ParamRangeFileName_Full << endl;
 		}
 		ParamRangeInput.close();
 	}
@@ -1569,16 +1556,14 @@ void Initialize_Params					(Params_Struct &PARAMS, Params_Struct &CurrentPARAMS,
 	////// Historical Hazards	
 	PARAMS. ParamNumbers.Min_HHaz = ParamCounter;
 	DType *FixedHistHazrds = new DType[HOUSE.TotalCountries]();
-	ifstream HistHazards; HistHazards.open(HOUSE.HH_InputFilename);
 	for (int country = 0; country < HOUSE.TotalCountries; country++)
 	{
-		HistHazards >> FixedHistHazrds[country];	
+		FixedHistHazrds[country] = 0.1;	
 		PARAMS.ParamVec.			push_back(FixedHistHazrds[country]); // add the historical hazards to ParamVec
 		PARAMS.NamesOfParameters.	push_back("h_" + std::to_string(country));
 		ParamCounter++;
 	}
 	delete[] FixedHistHazrds;
-	HistHazards.close(); 
 	PARAMS. ParamNumbers.Max_HHaz = ParamCounter - 1;
 
 
