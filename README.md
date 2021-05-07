@@ -84,7 +84,7 @@ Default output strings are created in the C++ function
 
 All model outputs are `.txt` files. If run locally, model output (e.g. parameter chains, survival tables, attack rates, estimated 
 age-specific seroprevalence) is by default stored in 
-[DengVaxSurvival/Output](./DengVaxSurvival/Output), (although all outputs are untracked by git) as 
+[DengVaxSurvival/Output](./DengVaxSurvival/Output), although all outputs are untracked by git as 
 they can be quite large. 
 
 The folder [R](./R) contains scripts to process and plot model output. By default, these scripts
