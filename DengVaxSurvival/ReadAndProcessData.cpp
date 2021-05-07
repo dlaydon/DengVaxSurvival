@@ -88,8 +88,6 @@ void ReadInParams			(Housekeeping_Struct &HOUSE, Chains_Struct &CHAINS, Chains_S
 			
 			if (param_name == "SerotypeString"					)	HOUSE.SerotypeString						= param_value_string;				//// string
 			if (param_name == "SFU"								)	HOUSE.SFU									= std::stoi(param_value_string);	//// bool
-			if (param_name == "Include_Late_Cases"				)	HOUSE.Include_Late_Cases					= std::stoi(param_value_string);	//// bool
-			if (param_name == "FakeExtObs"						)	HOUSE.FakeExtObs							= std::stoi(param_value_string);	//// bool
 			if (param_name == "PooledCountries"					)	HOUSE.PooledCountries						= std::stoi(param_value_string);	//// bool
 			if (param_name == "PooledTrials"					)	HOUSE.PooledTrials							= std::stoi(param_value_string);	//// bool
 			if (param_name == "Empirical_SeroPrevs"				)	HOUSE.Empirical_SeroPrevs					= std::stoi(param_value_string);	//// bool

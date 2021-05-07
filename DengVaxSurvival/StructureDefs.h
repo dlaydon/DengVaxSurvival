@@ -397,11 +397,6 @@ struct Housekeeping_Struct {
 	int  Which_Sero_FitsAll			= 0; 
 	
 	bool SFU						= true;		//// SFU = Sanofi_FollowUp_Definitions
-	bool Include_Late_Cases			= false; 
-	bool FakeExtObs					= false;
-	bool MakeEveryoneAControl		= false;	//// obviously for checking only. 
-	bool MakeEveryoneAVaccinee		= false;	//// obviously for checking only. 
-	
 	
 	bool PooledCountries		= false; //// so all CYD-14 countries aggregated together and all CYD-15 aggregated together
 	bool PooledTrials			= false; 
@@ -1039,15 +1034,10 @@ struct Housekeeping_Struct {
 		if (ParamRangeFileName != DefaultParamRangeFileName) OutputString = OutputString + "_" + ParamRangeFileName;
 
 		if (SFU)					OutputString = OutputString + "_SFU";
-		if (Include_Late_Cases)		OutputString = OutputString + "_IncLate";
-		if (FakeExtObs)				OutputString = OutputString + "_FakeExtObs";
 
 		if (AddOutputStringExtra)	OutputString = OutputString + OutputStringExtra;
 
 		//// Guards against horrific misuse of cluster or overwriting of files.
-#ifndef USE_CLUSTER
-		OutputString = OutputString + "_Dummy";
-#endif
 #ifndef USE_RANDOM_NUMBERS
 		OutputString = OutputString + "_NOT_USING_RANDOM_NUMBERS";
 #endif
@@ -2133,19 +2123,7 @@ struct Survival_Struct {  //// version with mild and severe added.
 				{
 					NoPassiveDaysFollowUp = 335;
 					NoActiveDaysFollowUp = 760;
-
-					if (!HOUSE.Include_Late_Cases)
-					{
-						NoDaysOfFollowUp		= 1227; 
-					}
-					else if (HOUSE.Include_Late_Cases && !HOUSE.FakeExtObs)
-					{
-						NoDaysOfFollowUp		= 1227; 
-					}
-					else if (HOUSE.Include_Late_Cases && HOUSE.FakeExtObs)
-					{
-						NoDaysOfFollowUp		= 1372;  
-					}
+					NoDaysOfFollowUp = 1227;
 				}
 			}
 			else
@@ -2166,15 +2144,7 @@ struct Survival_Struct {  //// version with mild and severe added.
 				{
 					NoActiveDaysFollowUp	= DATA.NoActiveDaysFollowUp;
 					NoPassiveDaysFollowUp	= 365;
-
-					if (!HOUSE.Include_Late_Cases)
-					{
-						NoDaysOfFollowUp		= DATA.NoDaysOfFollowUp; 
-					}
-					else if (HOUSE.Include_Late_Cases)	
-					{
-						NoDaysOfFollowUp		= DATA.NoDaysOfFollowUp; /// this will help with survival curve output
-					}
+					NoDaysOfFollowUp		= DATA.NoDaysOfFollowUp;
 				}
 			}	
 
