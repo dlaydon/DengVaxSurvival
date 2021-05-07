@@ -1675,26 +1675,11 @@ void Initialize_FollowUp				(DATA_struct &DATA, const Housekeeping_Struct &HOUSE
 		}
 		else	if (HOUSE.ActiveOrPassivePhase == DO_ACTIVE_AND_PASSIVE)
 		{
-			if (!HOUSE.Include_Late_Cases)
-			{
-				DATA.	NoDaysOfFollowUp		= 1227; //// longest active+passive phase duration, so you need waning values for all of them. 
-				DATA.	NoActiveDaysFollowUp	= 891;	// using Sanofi definitions then there is no single NoActiveDaysFollowUp value - different for all patients. 
-			}
-			else if (HOUSE.Include_Late_Cases && !HOUSE.FakeExtObs)
-			{
-				DATA.	NoDaysOfFollowUp		= 1327; //// max(Data$EndPassivePhase_InDays- Data$StartFollowUpDate_InDays)
-				DATA.	NoActiveDaysFollowUp	= 891;	// using Sanofi definitions then there is no single NoActiveDaysFollowUp value - different for all patients. 
-			}
-			else if (HOUSE.Include_Late_Cases && HOUSE.FakeExtObs)
-			{
-				DATA.	NoDaysOfFollowUp		= 1372; //// max(Data$EndPassivePhase_InDays- Data$StartFollowUpDate_InDays)
-				DATA.	NoActiveDaysFollowUp	= 891;	// using Sanofi definitions then there is no single NoActiveDaysFollowUp value - different for all patients. 
-			}
+			DATA.NoDaysOfFollowUp		= 1227; //// longest active+passive phase duration, so you need waning values for all of them. 
+			DATA.NoActiveDaysFollowUp	= 891;		// using Sanofi definitions then there is no single NoActiveDaysFollowUp value - different for all patients. 
 		}
-			 if (!HOUSE.PASSIVE_PHASE_ONLY)	DATA.N_WaningDays = DATA.NoDaysOfFollowUp;	//// In ordinary circumstances these are the same. If PASSIVE_PHASE_ONLY, you change 
-		else if (!HOUSE.Include_Late_Cases)	DATA.N_WaningDays = 1227;					//// if (HOUSE.PASSIVE_PHASE_ONLY)	set DATA.N_WaningDays to what DATA.NoDaysOfFollowUp would have been in passive phase. 
-		else if ( HOUSE.Include_Late_Cases && !HOUSE.FakeExtObs) DATA.N_WaningDays = 1327;
-		else if ( HOUSE.Include_Late_Cases &&  HOUSE.FakeExtObs) DATA.N_WaningDays = 1372;
+		if (!HOUSE.PASSIVE_PHASE_ONLY)	DATA.N_WaningDays = DATA.NoDaysOfFollowUp;	//// In ordinary circumstances these are the same. If PASSIVE_PHASE_ONLY, you change 
+		else 							DATA.N_WaningDays = 1227;					//// if (HOUSE.PASSIVE_PHASE_ONLY)	set DATA.N_WaningDays to what DATA.NoDaysOfFollowUp would have been in passive phase. 
 	}
 	else
 	{
@@ -1710,21 +1695,11 @@ void Initialize_FollowUp				(DATA_struct &DATA, const Housekeeping_Struct &HOUSE
 		}
 		else	if (HOUSE.ActiveOrPassivePhase == DO_ACTIVE_AND_PASSIVE)
 		{
-			if (!HOUSE.Include_Late_Cases)
-			{
-				DATA.	NoDaysOfFollowUp		= 1095; 
-				DATA.NoActiveDaysFollowUp		= 730;
-			}
-			else if (HOUSE.Include_Late_Cases)
-			{
-				DATA.	NoDaysOfFollowUp		= 1328; 
-				DATA.NoActiveDaysFollowUp		= 730;
-			}
+			DATA.NoDaysOfFollowUp = 1095;
+			DATA.NoActiveDaysFollowUp = 730;
 		}
 			 if (!HOUSE.PASSIVE_PHASE_ONLY)										DATA.N_WaningDays = DATA.NoDaysOfFollowUp;	//// In ordinary circumstances these are the same. If PASSIVE_PHASE_ONLY, you change 
-		else if (!HOUSE.Include_Late_Cases)										DATA.N_WaningDays = 1095;					//// if (HOUSE.PASSIVE_PHASE_ONLY)	set DATA.N_WaningDays to what DATA.NoDaysOfFollowUp would have been in passive phase. 
-		else if ( HOUSE.Include_Late_Cases && !HOUSE.FakeExtObs) DATA.N_WaningDays = 1328;
-		else std::cerr << "HOUSE.Include_Late_Cases && HOUSE.FakeExtObs NOT CODED FOR NON-SFU" << endl; 
+		else DATA.N_WaningDays = 1095;					//// if (HOUSE.PASSIVE_PHASE_ONLY)	set DATA.N_WaningDays to what DATA.NoDaysOfFollowUp would have been in passive phase. 
 	}	
 }
 void AllocateMemoryAndPopulateSets		(DATA_struct &DATA, const Housekeeping_Struct &HOUSE)
