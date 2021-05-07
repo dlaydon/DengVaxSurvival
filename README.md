@@ -98,6 +98,10 @@ Please note that these parameter files use different simulated data files `SimDa
 Default output strings are created in the C++ function 
 `StructureDefs.h::Housekeeping_Struct::CreateOutputString`, and in the R function `DirectoriesEtc.R::ChooseOutputString`
 
+:warning: All parameter files provided have a relatively small number of MCMC iterations (
+11,000 with 1,000 iteration burn-in) for ease of use. Our real estimates use 1,100,000 iterations with 
+a burn-in period of 100,000 iterations.
+
 ## Output
 
 All model outputs are `.txt` files. If run locally, model output (e.g. parameter chains, survival tables, attack rates, estimated 
