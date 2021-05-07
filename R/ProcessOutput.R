@@ -280,7 +280,7 @@ ShortenOutputString = TRUE
 
 ModelRuns = DefineModelRuns( 
 		
-		ModelVariants 									= c("K_SEROPOS")		, 
+#		ModelVariants 									= c("K_SEROPOS")		, 
 #		MildSeveres 									= c("_MILDSEVERE")		,
 #		Hosp_And_NonHosp 								= c("", "_hosp")		,
 		SS_VEs_AND_Not									= 1						,
