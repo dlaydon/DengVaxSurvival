@@ -21,7 +21,8 @@ Updating the code to make it more easily interpretable and user-friendly is a wo
 
 The model is written in C++, using OpenMP to improve performance on multi-core processors. 
 C++ source and header files are located in the subdirectory [DengVaxSurvival](./DengVaxSurvival), 
-and R output processing code can be found in the subdirectory [R](./R). 
+ready for loading and building from Visual Studio. R output processing code can be found in the 
+subdirectory [R](./R). 
 
 ## Simulated Sample Data
 
@@ -32,17 +33,23 @@ without serotype effects (`SimData_NoSerotype.txt`).
 
 ## Running
 
-The target executable of the C++ source code is named `D_MCMC.exe`, which takes a single 
+The target executable of the C++ source code is named `DengVaxSurvival.exe`, which takes a single 
 command line argument specifying a parameter file. So the syntax for running the executable is 
-`D_MCMC.exe Params_ParticularModelSettings.txt`. 
+
+``DengVaxSurvival.exe Params_ParticularModelSettings.txt`. 
+
 The code is heavily parallelized and (broadly) will run faster with more cores, ideally on a 
 high-performance cluster. However the model can also be run locally if the source code is 
 recompiled having turned off/commented out two lines in the header file Macros.h, namely 
 `#define USE_CLUSTER` and `#define USE_COMMAND_LINE`. 
 If run locally, have set number of cores at 6 (in main.cpp), which again can be changed if desired. 
 
-Note to run on a cluster, you will need to have the .dll files included in [dll_files](./dll_files) copied to whichever directory the
-executable (.exe) is run from. 
+Note that OpenMP copmiled executables on Windows will typically rely on a dll file, provided with 
+the compiler, or with a runtime environment. For convenience, compiled executables, and the 
+accompanying dll file are included in the `bin` folder. If you rebuild the code, you will need to 
+look for the dll matching your compiler. The location for Visual Studio may be similar to
+`VC\Redist\MSVC\14.28.29325\x64\Microsoft.VC142.OpenMP` within the folder 
+`C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\`
 
 ## Parameter files
 
