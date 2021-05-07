@@ -26,7 +26,7 @@ subdirectory [R](./R).
 
 ## Simulated Sample Data
 
-The directory [DengVaxSurvival/Data](./DengVaxSurvival/Data) contains simulated sample data 
+The directory [ParamFiles/Data](./ParamFiles/Data) contains simulated sample data 
 for our default model (`SimData.txt`), and for models that separate cases by disease severity 
 (`SimData_Hosp.txt` and `SimData_Severe.txt`), as well as models 
 without serotype effects (`SimData_NoSerotype.txt`). 
@@ -42,14 +42,18 @@ The code is heavily parallelized and (broadly) will run faster with more cores, 
 high-performance cluster. However the model can also be run locally if the source code is 
 recompiled having turned off/commented out two lines in the header file Macros.h, namely 
 `#define USE_CLUSTER` and `#define USE_COMMAND_LINE`. 
-If run locally, have set number of cores at 6 (in main.cpp), which again can be changed if desired. 
+If run locally, we have set number of cores at 6 (in main.cpp), which again can be changed if desired. 
 
-Note that OpenMP copmiled executables on Windows will typically rely on a dll file, provided with 
+Note that OpenMP compiled executables on Windows will typically rely on a .dll file, provided with 
 the compiler, or with a runtime environment. For convenience, compiled executables, and the 
-accompanying dll file are included in the `bin` folder. If you rebuild the code, you will need to 
-look for the dll matching your compiler. The location for Visual Studio may be similar to
+accompanying .dll file are included in the [bin](./bin) folder. If you rebuild the code, you will need to 
+look for the .dll matching your compiler. The location for Visual Studio may be similar to
 `VC\Redist\MSVC\14.28.29325\x64\Microsoft.VC142.OpenMP` within the folder 
-`C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\`
+`C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\`. 
+
+We have provided example batch (.bat) files to reproduce our main model (`Example_MainModel.bat`)
+which includes serotype and age effects, and other model variants that use the 
+parameter files detailed below.
 
 ## Parameter files
 
@@ -91,11 +95,11 @@ Default output strings are created in the C++ function
 
 All model outputs are `.txt` files. If run locally, model output (e.g. parameter chains, survival tables, attack rates, estimated 
 age-specific seroprevalence) is by default stored in 
-[DengVaxSurvival/Output](./DengVaxSurvival/Output), although all outputs are untracked by git as 
+[ParamFiles/Output](./ParamFiles/Output), although all outputs are untracked by git as 
 they can be quite large. 
 
 The folder [R](./R) contains scripts to process and plot model output. By default, these scripts
-expect model output to be located in [DengVaxSurvival/Output](./DengVaxSurvival/Output).
+expect model output to be located in [ParamFiles/Output](./ParamFiles/Output).
 
 
 ### Relevant papers
