@@ -10,18 +10,18 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#include <iostream>					
+#include <iostream>
 #include <fstream>
 #include <array>
 #include <list>
-#include <string>					
-#include <algorithm>    
+#include <string>
+#include <algorithm>
 #include <random>
 #include <vector>
 #include <cstdlib>
 #include <time.h>
 #include <regex>
 #include <cstring>
-#include "randlib_par.h"		
+#include "randlib_par.h"
 #include "omp.h"
 

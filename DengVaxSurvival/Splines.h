@@ -22,4 +22,6 @@ DType IntVacHaz					(int Lower_t, int Upper_t, int Dose_1_Day, int Dose_2_Day, i
 DType VaccineHazard				(int CalendarDay, int Dose_1_Day, int Dose_2_Day, int Dose_3_Day, int AgeInYears, char BaselineSeroStatus, const int &country, const Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE);
 DType IntVacHaz_SingleDay		(int CalendarDay, int Dose_1_Day, int Dose_2_Day, int Dose_3_Day, int AgeInYears, char BaselineSeroStatus, const int &country, const Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE);
 
+#define _I64(x) static_cast<int64_t>(x)
+
 #endif

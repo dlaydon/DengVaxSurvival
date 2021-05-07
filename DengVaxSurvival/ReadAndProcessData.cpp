@@ -314,7 +314,7 @@ void ReadInData				(DATA_struct &DATA, Housekeeping_Struct &HOUSE)
 	else	if (HOUSE.HowManyCaseCategories == 1)	ptr_IsCase		= DATA.IsCase_ActiveMild	;
 	else	if (HOUSE.HowManyCaseCategories == 2)	ptr_IsCase		= DATA.IsCase				;
 	
-	if (HOUSE.PASSIVE_PHASE_ONLY & HOUSE.MildAndSevere == TREATED_SEPARATELY)
+	if (HOUSE.PASSIVE_PHASE_ONLY && (HOUSE.MildAndSevere == TREATED_SEPARATELY))
 		for (int line = 0; line < 100; line++) std::cerr << "PASSIVE_PHASE_ONLY & MILDSEVERE - NOT CODED UP!!!" << endl;
 
 	int *ptr_Iis = (HOUSE.ExtImSub == ExtImSub_Option::AS_DATA) ? DATA.Imputed_Ii_s : DATA.Ii_s;
@@ -361,7 +361,7 @@ void ReadInData				(DATA_struct &DATA, Housekeeping_Struct &HOUSE)
 
 		if (HOUSE.PASSIVE_PHASE_ONLY) //// when setting the minimum calendar time that a patient entered passive phase, need to be careful not to accidentally include active phase cases or LTFUs, as their "Start (and end) Passive Phase" has been set to the last day of their active phase, to make sure any integrated hazards are zero. But here would erroneously result in early passivee phase. 
 		{
-			if (ptr_StartFollowUp[a]	< DATA.CountryMinMaxCalendarTime[DATA.ci_s[a]][Min_TimeIndex] & !DATA.IsCase_ActiveMild[a] & !DATA.LTFU[a] ) DATA.CountryMinMaxCalendarTime[DATA.ci_s[a]][Min_TimeIndex] = ptr_StartFollowUp[a];
+			if ((ptr_StartFollowUp[a]	< DATA.CountryMinMaxCalendarTime[DATA.ci_s[a]][Min_TimeIndex]) && !DATA.IsCase_ActiveMild[a] && !DATA.LTFU[a] ) DATA.CountryMinMaxCalendarTime[DATA.ci_s[a]][Min_TimeIndex] = ptr_StartFollowUp[a];
 		}
 		else
 		{
@@ -618,7 +618,7 @@ void ProcessOldParamChain	(DATA_struct &DATA, const Housekeeping_Struct &HOUSE, 
 		string OldParamChainFileName		= "Output\\ParameterChainOutput"		+ HOUSE.OutputStringForOldChainInput + ".txt";
 		string WBIC_OldParamChainFileName	= "Output\\WBIC_ParameterChainOutput"	+ HOUSE.OutputStringForOldChainInput + ".txt";
 
-		if (FileExists(WBIC_OldParamChainFileName) & HOUSE.StartFrom_WBIC_Chain) OldParamChainFileName = WBIC_OldParamChainFileName;
+		if (FileExists(WBIC_OldParamChainFileName) && HOUSE.StartFrom_WBIC_Chain) OldParamChainFileName = WBIC_OldParamChainFileName;
 		if (FileExists(OldParamChainFileName))
 		{
 			std::cerr << "Amending Params with " << OldParamChainFileName << endl;

@@ -2,6 +2,7 @@
 #include "Probability.h"
 #include "CalcParamsEtc.h"
 
+
 /*
 	This script contains functions that calculate associated quantities of parameters. For example, "Efficacies" will affect SumRhoEffs etc; knots will affect (integrated) baseline hazard values. 
 	In addition, these functions store various quantities that can be precalculated to speed computation. e.g. KPlusValues is an array calculated once for each unique value then used in Likelihood calculations as necessary. 
@@ -89,7 +90,7 @@ void Calc_SumRhoEffNegs_c_BS_PS			(int country, int BaselineSeroStatus, int Phas
 	if ((HOUSE.EffNegWane == EffNegWane_Option::FROM_ZERO || HOUSE.EffNegWane == EffNegWane_Option::NO_WANE))
 	{
 		//// If efficacy can in principle be negative be negative, need to run summation of rho_cd^*
-		if (CanEfficacyBeNegative(BaselineSeroStatus, HOUSE) & !HOUSE.BaselinePartition) //// if BaselinePartition then sum(rho_cd) != 1. 
+		if (CanEfficacyBeNegative(BaselineSeroStatus, HOUSE) && !HOUSE.BaselinePartition) //// if BaselinePartition then sum(rho_cd) != 1. 
 		{
 			DType RhoCDStar_Dummy = 0;
 			DType EfficacyDummy = NULL; ///// need to know if "Efficacy" is greater or less than zero, which depends on a number of factors. Are there Age Effects? Are there Serotype effects as well? If so do they combine multiplicatively or additively?
@@ -119,21 +120,21 @@ DType Choose_K					(int TrialArm, int BaselineSeroStatus, int country, int Age, 
 	if (HOUSE.ModelVariant == VAC_SILENT)
 		if (TrialArm == ControlGroup)
 			if (BaselineSeroStatus == SeroNeg)			K = PARAMS.K_s[country][PhaseSeverity][0][serotype];
-			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
+			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
 		else											K = PARAMS.K_s[country][PhaseSeverity][BaselineSeroStatus + 1][serotype];
 	else if (HOUSE.ModelVariant == K_SEROPOS)
 			if (BaselineSeroStatus == SeroNeg)			K = PARAMS.K_s[country][PhaseSeverity][0][serotype];
-			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
+			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
 	else if (HOUSE.ModelVariant == AS_PRIME)
 		if (TrialArm == ControlGroup)
 		{
 			if (BaselineSeroStatus == SeroNeg)			K = PARAMS.K_s[country][PhaseSeverity][0][serotype];
-			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
+			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
 		}
 		else /// i.e. vaccine group
 		{
 			if (BaselineSeroStatus == SeroNeg)			K = PARAMS.Ks_Prime[country][PhaseSeverity][SeroNeg][serotype][Age];
-			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
+			else 										K = K_seropos(PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)], Age, PARAMS.K_s[country][PhaseSeverity][1][serotype], PARAMS.K_s[country][PhaseSeverity][2][serotype]);
 		}
 	else if (HOUSE.ModelVariant == SIMPLE_NUMERICAL)	K = PARAMS.K_s[country][PhaseSeverity][BaselineSeroStatus][serotype]; //// for SIMPLE_NUMERICAL K multipliers the same between trial arms. And there is no K2 so can just use BaselineSeroStatus as the same as PrevInf. 
 
@@ -257,7 +258,7 @@ void Calc_ParamSeroPrevs_country					(int &country, Params_Struct &PARAMS, const
 	//// calculate P(SNeg) and P(SPos) for each age. 
 	for (int age = 0; age < HOUSE.HowManyAges; age++)
 	{
-		PARAMS.SeroPrevs[NonLogIndex][country][SeroNeg][age] = exp(-PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country] * (DType)age);			//// P(SNeg)
+		PARAMS.SeroPrevs[NonLogIndex][country][SeroNeg][age] = exp(-PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)] * (DType)age);			//// P(SNeg)
 		PARAMS.SeroPrevs[NonLogIndex][country][SeroPos][age] = 1 - PARAMS.SeroPrevs[NonLogIndex][country][SeroNeg][age];							//// P(SPos) = 1 - P(SNeg)
 	}
 	//// calculate log(P(SNeg)) and log(P(SPos)) for each age. 
@@ -267,7 +268,7 @@ void Calc_ParamSeroPrevs_country					(int &country, Params_Struct &PARAMS, const
 }
 void Calc_KplusValues_country_PhaseSeverity			(Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE, int country, int PhaseSeverity)
 {
-	DType AgeDummy, hci = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country];
+	DType AgeDummy, hci = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)];
 	DType K1, K2;
 
 	DType AmountToAdd = 0;
@@ -303,7 +304,7 @@ void Calc_KplusPrimes_country_PhaseSeverity			(Params_Struct &PARAMS, const Hous
 {
 	if (HOUSE.ModelVariant == AS_PRIME)
 	{
-		DType AgeDummy, K1, K2, AmountToAdd = 0, hci = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + country];
+		DType AgeDummy, K1, K2, AmountToAdd = 0, hci = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_HHaz + _I64(country)];
 		for (int age = 0; age < HOUSE.HowManyAges; age++)
 		{
 			AgeDummy = age;
@@ -370,9 +371,9 @@ void Calc_SumRhoK0_SNeg_Primes_country_PhaseSeverity(Params_Struct &PARAMS, cons
 }
 void Calc_RhosFrom_qParams							(int &country, Params_Struct &PARAMS, const Housekeeping_Struct &HOUSE)
 {
-	DType qc0 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * country		]; 
-	DType qc1 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * country + 1	];
-	DType qc2 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * country + 2	];
+	DType qc0 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * _I64(country)		]; 
+	DType qc1 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * _I64(country) + 1	];
+	DType qc2 = PARAMS.ParamVec[PARAMS.ParamNumbers.Min_qval + (HOUSE.N_STypes - 1) * _I64(country) + 2	];
 
 	PARAMS.rhos[country][Serotype_1] =								qc0		;	//// change in qc0 affects all serotypes	in country c. 
 	PARAMS.rhos[country][Serotype_2] =					qc1		* (1 - qc0)	;	//// change in qc1 affects serotypes 2,3,4	in country c. 
@@ -455,7 +456,6 @@ void Calc_IVH_Values_c_BS_PS						(int country, int BaselineSeroStatus, int Phas
 #pragma omp parallel for schedule(static,1) 
 	for (int thread_no = 0; thread_no < HOUSE.max_threads; thread_no++)
 	{
-		DType AmountToAdd;
 		int person_i, FirstDayVacHazard;
 		for (int i = thread_no; i < DATA.Set_Array[country][Stratum_index].size(); i += HOUSE.max_threads)
 		{
@@ -773,9 +773,9 @@ void Calc_WaningValues_BS_Age		(int BaselineSeroStatus, int AgeInYears, Params_S
 		else if (AgeInYears <= 11)	WaningValue = PARAMS.WaningParams[BaselineSeroStatus][1];
 		else						WaningValue = PARAMS.WaningParams[BaselineSeroStatus][2];
 	}
-	else if (HOUSE.AS_Waning == Age_Option::SPLINE || HOUSE.AS_Waning == Age_Option::SPLINE_LINE || HOUSE.AS_Waning == Age_Option::SPLINE_STEP || HOUSE.AS_Waning == Age_Option::CUBIC)
-		WaningValue = WaningDurationSpline((DType)AgeInYears, BaselineSeroStatus, PARAMS, HOUSE);
-	else	std::cerr << "CalcWaningValues_BS_Age ERROR: if/else tree wrong" << endl;
+	else if ((HOUSE.AS_Waning == Age_Option::SPLINE) || (HOUSE.AS_Waning == Age_Option::SPLINE_LINE) || (HOUSE.AS_Waning == Age_Option::SPLINE_STEP) || (HOUSE.AS_Waning == Age_Option::CUBIC))
+		WaningValue = WaningDurationSpline(AgeInYears, BaselineSeroStatus, PARAMS, HOUSE);
+	else { std::cerr << "CalcWaningValues_BS_Age ERROR: if/else tree wrong" << endl; WaningValue = 0; }
 
 #pragma omp parallel for schedule(static,1) 
 	for (int thread_no = 0; thread_no < HOUSE.max_threads; thread_no++)

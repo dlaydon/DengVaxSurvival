@@ -110,32 +110,38 @@ int Find_SeroStatus_FromEffParam			(const int &param_no, const Housekeeping_Stru
 {
 		 if (IsParamAnEfficacy			(param_no, ParamNumbers))	return (Find_Final_Index_Array(param_no, ParamNumbers.Min_VacE		, HOUSE.HowManySeroStatuses));
 	else if (IsParamAn_atInf_Efficacy	(param_no, ParamNumbers))	return (Find_Final_Index_Array(param_no, ParamNumbers.Min_VacE_atInf, HOUSE.HowManySeroStatuses));
+	else return 0; // Should never happen.
 }
 int Find_Serotype_FromEffParam				(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers, const int &SeroStatus)
 {
 		 if (IsParamAnEfficacy			(param_no, ParamNumbers))	return (Find_Penultimate_ArrayIndex(param_no, ParamNumbers.Min_VacE			, HOUSE.HowManySeroStatuses, SeroStatus, HOUSE.N_STypes_VEs));
 	else if (IsParamAn_atInf_Efficacy	(param_no, ParamNumbers))	return (Find_Penultimate_ArrayIndex(param_no, ParamNumbers.Min_VacE_atInf	, HOUSE.HowManySeroStatuses, SeroStatus, HOUSE.N_STypes_VEs));
+	else return 0; // Should never happen.
 }
 int Find_PhaseSeverity_From_EffParam		(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers, const int &SeroStatus, const int &serotype)
 {
 		 if (IsParamAnEfficacy			(param_no, ParamNumbers))	return (Find_3rdLast_ArrayIndex(param_no, ParamNumbers.Min_VacE			, HOUSE.HowManySeroStatuses, SeroStatus, HOUSE.N_STypes_VEs, serotype, HOUSE.HowManyCaseCategories));
 	else if (IsParamAn_atInf_Efficacy	(param_no, ParamNumbers))	return (Find_3rdLast_ArrayIndex(param_no, ParamNumbers.Min_VacE_atInf	, HOUSE.HowManySeroStatuses, SeroStatus, HOUSE.N_STypes_VEs, serotype, HOUSE.HowManyCaseCategories));
+	else return 0; // Should never happen.
 }
 int Find_PrevInf_From_K_Param				(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers)
 {
 		 if (IsParamARelativeRisk		(param_no, ParamNumbers))	return (Find_Final_Index_Array(param_no, ParamNumbers.Min_K		, HOUSE.Num_K_Params));
 	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers))	return (Find_Final_Index_Array(param_no, ParamNumbers.Min_Hosp_K, HOUSE.Num_K_Params));
+	else return 0; // Should never happen.
 }
 int Find_PhaseSeverity_From_K_Param			(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers, const int &PrevInf)
 {
 	  	 if (IsParamARelativeRisk		(param_no, ParamNumbers))								return (Find_Penultimate_ArrayIndex(param_no, ParamNumbers.Min_K, HOUSE.Num_K_Params, PrevInf, HOUSE.HowManyCaseCategories)); 
-	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers) & !HOUSE.PASSIVE_PHASE_ONLY)	return (	PassiveSevere	);
-	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers) &  HOUSE.PASSIVE_PHASE_ONLY)	return (	ActiveMild		); /// because relabelled passive phase to be "active phase" to make code run more easily. 
+	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers) && !HOUSE.PASSIVE_PHASE_ONLY)	return (	PassiveSevere	);
+	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers) &&  HOUSE.PASSIVE_PHASE_ONLY)	return (	ActiveMild		); /// because relabelled passive phase to be "active phase" to make code run more easily.
+	else return 0; // Should never happen.
 }
 int Find_Serotype_From_K_Param				(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers, const int &PrevInf, const int &PhaseSeverity)
 {
 		 if (IsParamARelativeRisk		(param_no, ParamNumbers))	return (	Find_3rdLast_ArrayIndex(param_no, ParamNumbers.Min_K, HOUSE.Num_K_Params, PrevInf, HOUSE.HowManyCaseCategories, PhaseSeverity, HOUSE.N_STypes_Ks)	);
 	else if (IsParamARelativeRisk_Hosp	(param_no, ParamNumbers))	return (	  (param_no - ParamNumbers.Min_Hosp_K	- PrevInf) / HOUSE.Num_K_Params);
+	else return 0; // Should never happen.
 }
 int Find_Type_From_ASVE_Param				(const int &param_no, const Housekeeping_Struct &HOUSE, const ParamNumbers_Struct &ParamNumbers)
 {
