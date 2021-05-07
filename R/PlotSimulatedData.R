@@ -7,8 +7,8 @@ MDValue = 9999
 ProjectDirectory 			= here()
 R_ScriptDirectory			= file.path(ProjectDirectory, "R")
 CppRootDirectory 			= here()
-CppOutputDirectory 			= file.path(CppRootDirectory, "DengVaxSurvival", "Output") 
-ProcessedDataDirectory 		= file.path(CppRootDirectory, "DengVaxSurvival", "Data") 
+CppOutputDirectory 			= file.path(CppRootDirectory, "ParamFiles", "Output") 
+ProcessedDataDirectory 		= file.path(CppRootDirectory, "ParamFiles", "Data") 
 ProcessedOutputDirectory	= file.path(ProjectDirectory, "ProcessedOutput")
 
 source(file.path(R_ScriptDirectory, "SubsetData.R"))
