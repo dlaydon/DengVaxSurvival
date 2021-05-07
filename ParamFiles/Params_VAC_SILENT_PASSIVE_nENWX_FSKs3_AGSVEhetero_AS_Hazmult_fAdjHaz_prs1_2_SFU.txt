@@ -83,10 +83,10 @@ Which_SNeg_SeroFitsAll	0
 Which_SPos_SeroFitsAll	0
 RelRisksSameBtwSerotypes	0
 Which_Sero_FitsAll	0
-BurnIn	100000
-No_Iterations	1100000
-WBIC_BurnIn	200000
-WBIC_No_Iterations	1200000
+BurnIn	1000
+No_Iterations	11000
+WBIC_BurnIn	2000
+WBIC_No_Iterations	12000
 WhenToFlipTemperatureBack	0
 UseSyntheticData	0
 RandomCases	0

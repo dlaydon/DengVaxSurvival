@@ -36,7 +36,7 @@ without serotype effects (`SimData_NoSerotype.txt`).
 The target executable of the C++ source code is named `DengVaxSurvival.exe`, which takes a single 
 command line argument specifying a parameter file. So the syntax for running the executable is 
 
-``DengVaxSurvival.exe Params_ParticularModelSettings.txt`. 
+`DengVaxSurvival.exe Params_ParticularModelSettings.txt`. 
 
 The code is heavily parallelized and (broadly) will run faster with more cores, ideally on a 
 high-performance cluster. However the model can also be run locally if the source code is 
@@ -57,7 +57,7 @@ parameter files detailed below.
 
 ## Parameter files
 
-The executable reads in a parameter file, named "Params_ParticularModelSettings.txt", 
+The executable reads in a parameter file, named `Params_ParticularModelSettings.txt`, 
 that govern which features are turned on or off,
 (initial) model parameter values, and the outputs tha are required,
 (e.g. MCMC chains, augmented data, survival curves, attack rates, hazard ratios, seroprevalence etc.).
@@ -70,26 +70,37 @@ The output strings are long, unweildly and difficult to interpret. We apologise 
 and are working to make this less painful. 
 
 Our main model (with both age and serotype effects) has output string
-`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU`. 
+`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU` (called with 
+`Example_MainModel.bat`). 
 Model with age effects only has output string 
-`VAC_SILENT_PASSIVE_nENWX_FSKs3_AGSVEhetero_AS_Hazmult_fAdjHaz_prs1_2_SFU`
+`VAC_SILENT_PASSIVE_nENWX_FSKs3_AGSVEhetero_AS_Hazmult_fAdjHaz_prs1_2_SFU` (called with 
+`Example_AgeEffectsOnly.bat`).
 Model with serotype effects only has output string 
-`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_fAdjHaz_prs1_2_SFU`
+`VAC_SILENT_PASSIVE_nENWX_SS_VEs_FSKs3_fAdjHaz_prs1_2_SFU` (called with 
+`Example_SerotypeEffectsOnly.bat`).
 Model with neither age nor serotype effects has output string 
-`VAC_SILENT_PASSIVE_nENWX_FSKs3_fAdjHaz_prs1_2_SFU`.
+`VAC_SILENT_PASSIVE_nENWX_FSKs3_fAdjHaz_prs1_2_SFU` (called with 
+`Example_NoAgeOrSerotypeEffects.bat`).
 
 The above models all assume the "vaccine-as-silent-infection" mechanism, and do not separate cases by disease severity. 
 The parameter file, 
-`Params_K_SEROPOS_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`, 
-models a variant without such immune priming. 
+`Params_K_SEROPOS_PASSIVE_nENWX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt` 
+(called with `Example_NoImmunePriming.bat`), models a variant without such immune priming. 
+
 
 Finally, parameters that model hospitalised and non-hospitalised disease separately are given in 
-file `Params_VAC_SILENT_PASSIVE_nENW_MILDSEVERE_hospX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`.  
+file `Params_VAC_SILENT_PASSIVE_nENW_MILDSEVERE_hospX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`. 
+(called with `Example_Hosp.bat`)
 Modelling severe and non-severe disease separately can be accomplished using 
 `Params_VAC_SILENT_PASSIVE_nENW_MILDSEVEREX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`. 
+(called with `Example_Severe.bat`)
 Please note that these parameter files use different simulated data files `SimData_Hosp.txt` and `SimData_Severe.txt`
 Default output strings are created in the C++ function 
 `StructureDefs.h::Housekeeping_Struct::CreateOutputString`, and in the R function `DirectoriesEtc.R::ChooseOutputString`
+
+:warning: All parameter files provided have a relatively small number of MCMC iterations (
+11,000 with 1,000 iteration burn-in) for ease of use. Our real estimates use 1,100,000 iterations with 
+a burn-in period of 100,000 iterations.
 
 ## Output
 
