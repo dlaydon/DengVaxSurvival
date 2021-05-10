@@ -276,12 +276,12 @@ ShortenOutputString = TRUE
 
 ModelRuns = DefineModelRuns( 
 		
-#		ModelVariants 									= c("K_SEROPOS")		, 
-#		MildSeveres 									= c("_MILDSEVERE")		,
-#		Hosp_And_NonHosp 								= c("", "_hosp")		,
-		SS_VEs_AND_Not									= 1						,
-		ASVE_Options 									= c("CATEGORICAL")		, #   "INDEPENDENT", "SPLINE", "CATEGORICAL", "CUBIC", "HILL" 
-		AS_Haz_Options 									= c("CATEGORICAL")		, #   "INDEPENDENT", "SPLINE", "CATEGORICAL", "CUBIC", "HILL" 
+		ModelVariants 									= c("VAC_SILENT", "K_SEROPOS")		, 
+		MildSeveres 									= c("", "_MILDSEVERE")		,
+		Hosp_And_NonHosp 								= c("", "_hosp")		,
+		SS_VEs_AND_Not									= 1:0						,
+		ASVE_Options 									= c("CATEGORICAL", "INDEPENDENT")		, #   "INDEPENDENT", "SPLINE", "CATEGORICAL", "CUBIC", "HILL" 
+		AS_Haz_Options 									= c("CATEGORICAL", "INDEPENDENT")		, #   "INDEPENDENT", "SPLINE", "CATEGORICAL", "CUBIC", "HILL" 
 )
 ModelRuns$OutputFolderNames
 length(ModelRuns$OutputFolderNames)
