@@ -24,7 +24,7 @@ C++ source and header files are located in the subdirectory [DengVaxSurvival](./
 ready for loading and building from Visual Studio. R output processing code can be found in the 
 subdirectory [R](./R). 
 
-## Simulated Sample Data
+## Simulated sample data
 
 The directory [ParamFiles/Data](./ParamFiles/Data) contains simulated sample data 
 for our default model (`SimData.txt`), and for models that separate cases by disease severity 
