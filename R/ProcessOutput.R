@@ -1,8 +1,4 @@
-	
-
-rm(list=ls())
-Sys.time()
-gc()
+## This scripts generates various plots and summary tables from Cpp output. 
 
 # Load dependencies
 require(shape)

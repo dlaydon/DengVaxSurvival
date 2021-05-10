@@ -90,13 +90,14 @@ The parameter file,
 
 Finally, parameters that model hospitalised and non-hospitalised disease separately are given in 
 file `Params_VAC_SILENT_PASSIVE_nENW_MILDSEVERE_hospX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`. 
-(called with `Example_Hosp.bat`)
+(called with `Example_Hosp.bat`).
 Modelling severe and non-severe disease separately can be accomplished using 
-`Params_VAC_SILENT_PASSIVE_nENW_MILDSEVEREX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt`. 
-(called with `Example_Severe.bat`)
+`Params_VAC_SILENT_PASSIVE_nENW_MILDSEVEREX_SS_VEs_FSKs3_AGSVEheteroAdd_AS_Hazmult_fAdjHaz_prs1_2_SFU.txt` 
+(called with `Example_Severe.bat`).
 Please note that these parameter files use different simulated data files `SimData_Hosp.txt` and `SimData_Severe.txt`
 Default output strings are created in the C++ function 
-`StructureDefs.h::Housekeeping_Struct::CreateOutputString`, and in the R function `DirectoriesEtc.R::ChooseOutputString`
+`StructureDefs.h::Housekeeping_Struct::CreateOutputString`, 
+and in the R function `DirectoriesEtc.R::ChooseOutputString`.
 
 :warning: All parameter files provided have a relatively small number of MCMC iterations 
 (11,000 with 1,000 iteration burn-in) for ease of use. Our real estimates use 1,100,000 iterations with 

@@ -120,7 +120,7 @@ ChooseStratum 				= function(AgeGroup, Country, Arm, SeroStatus)
 	
 	CountryAgeGroupIndex = (AgeGroup * 13 * 9) + (Country * 9) #  * 13 countries * 9 hazard groups
 	
-	### loads of possibilities for arm and serostatus - given haphazard way hazard groups are numbered, best to do this with an exhaustive list. 
+	### lots of possibilities for arm and serostatus - given haphazard way hazard groups are numbered, best to do this with an exhaustive list. 
 	## In R indices, hazard groups are: 1 = SeroPos Control, 2 = SeroNeg Control, 3 = SeroPos Vaccine, 4 = SeroNeg Vaccine, 5 = Control,  6 = Vaccine,  7 = SeroPositive, 8 = SeroNegative, 9 = everyone in that country. 
 	
 	HazardNumber 		= ChooseHazardNumber(Arm, SeroStatus)
@@ -131,7 +131,6 @@ ChooseStratum 				= function(AgeGroup, Country, Arm, SeroStatus)
 }
 ChooseCatAgeGroup			= function(Age)
 {
-	#### this function used to get age group (CYD-14) from Age. Saves writing the code below all the time. Works for CYD-15, 
 	if (Age < 0) stop("ChooseCatAgeGroup error: Age < 0") else 
 	if (Age < 6) 	AG = 1 else
 	if (Age < 12) 	AG = 2 else 	

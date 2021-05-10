@@ -149,7 +149,7 @@ Spline_XVec_sample 			= function(xValues, Type, modelrun = ModelRun, ParamSetNum
 }
 Spline_XVec_Mean 			= function(xValues, Type, modelrun = ModelRun, BaselineSeroStatus = NULL, xKnots = NULL, Mean_yKnots = NULL, yMin = NULL, yMax = NULL)
 {
-	#### Wrapper of Spline_x_sample that allows you to plot for multiple ages / dates / x values at once, without having to re-write mapply. Also uses the mean knots
+	#### Wrapper of Spline_x_sample that allows multiple ages / dates / x values at once, without having to re-write mapply. Also uses  mean knots
 	if (is.null(Mean_yKnots)) Mean_yKnots = Calculate_Mean_yKnots(Type = Type, BaselineSeroStatus = BaselineSeroStatus, modelrun = modelrun)
 	
 	Vec = mapply (	Spline_x_sample, xValue = xValues, MoreArgs = list(Type = Type, BaselineSeroStatus = BaselineSeroStatus, modelrun = ModelRun, yKnots = Mean_yKnots))	
@@ -286,7 +286,6 @@ PlotSplines = function(country = NULL, BaselineSeroStatus = NULL, modelrun = Mod
 	if (PlotType == "Hazards")	XLIM = c(   min(as.numeric(xKnotsDates)) - NumDaysAroundKnots   , max(as.numeric(xKnotsDates)) + NumDaysAroundKnots ) else XLIM = c(2, 16)
 	
 	## Choose PLOTTITLE
-	
 	if (ShortenOutputString) ModelRun_string = AbbreviateOutputString(OutputSubDir, modelrun) else ModelRun_string = OutputSubDir
 	if (is.null(PLOTTITLE))
 	{
