@@ -70,6 +70,17 @@ barplot(Mat_Passive_CYD15, main = "Passive phase cases (CYD15)", ylab = YLAB, yl
 dev.off()
 
 
+p1 <- barplot(Mat_Active_CYD14 , main = "Active phase cases (CYD14)"	, ylab = YLAB, ylim = c(0, 12)	, border = NA, xlab= XLAB, col=COLS, beside=TRUE, legend.text = TRUE, args.legend = list(x = "topright", cex = 1.1), cex.lab = CEXLAB, space = c(0, 0.5)) 
+p2 <- barplot(Mat_Active_CYD15 , main = "Active phase cases (CYD15)"	, ylab = YLAB, ylim = c(0, 7)	, border = NA, xlab= XLAB, col=COLS, beside=TRUE, legend.text = TRUE, args.legend = list(x = "topright", cex = 1.1), cex.lab = CEXLAB, space = c(0, 0.5)) 
+p3 <- barplot(Mat_Passive_CYD14, main = "Passive phase cases (CYD14)", ylab = YLAB, ylim = c(0, 1)	, border = NA, xlab= XLAB, col=COLS, beside=TRUE, legend.text = TRUE, args.legend = list(x = "topright", cex = 1.1), cex.lab = CEXLAB, space = c(0, 0.5)) 
+p4 <- barplot(Mat_Passive_CYD15, main = "Passive phase cases (CYD15)", ylab = YLAB, ylim = c(0, 0.4)	, border = NA, xlab= XLAB, col=COLS, beside=TRUE, legend.text = TRUE, args.legend = list(x = "topright", cex = 1.1), cex.lab = CEXLAB, space = c(0, 0.5)) 
+
+png(here(paste0("eco/Plots/Fig1_", OutputString, ".png")), units = "in", res = 300, height = 7.5, width = 7.5)
+
+grid.arrange(p1,p2,p3,p4, ncol = 2)
+dev.off()
+
+
 
 
 ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** ### *** 
