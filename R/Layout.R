@@ -128,12 +128,11 @@ SetUpMultiPlot 						= function(NoCols = NULL, NoRows = NULL, ColNames = NULL, R
 	
 	if (AddTitle)
 	{	
-		par(mar = rep(0, 4)) ### without this you often get the annoying "Error in plot.new() : figure margins too large" error. Set margins to zero for the title, then reset them to OrigMAR (global variable defined at start of script). 
+		par(mar = rep(0, 4)) ### without this get the annoying "Error in plot.new() : figure margins too large" error. Set margins to zero for the title, then reset them to OrigMAR (global variable defined at start of script). 
 		plot.new()
 		if (is.null(MultiPlot_Title))
 		{
 			if (ShortenOutputString) MultiPlot_Title = AbbreviateOutputString(OutputSubDir, modelrun) else MultiPlot_Title = OutputSubDir
-			#MultiPlot_Title = paste0(MultiPlot_Title, "\n", AGs_String, Countries_String, DiseaseSeverities_String, Phases_String)
 		}
 		text(0.5, 0.5, MultiPlot_Title , cex = MultiPlot_Title_Cex, font = 2)
 	}

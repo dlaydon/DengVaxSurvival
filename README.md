@@ -3,7 +3,8 @@
 This repository contains all code for the Bayesian survival analysis of the efficacy profile of 
 the Sanofi-Pasteur CYD-TDV dengue vaccine
 (Dengvaxia), developed primarily by Daniel J. Laydon and Neil M. Ferguson of the MRC Centre
-for Global Infectious Disease Analysis at Imperial College, London.
+for Global Infectious Disease Analysis at Imperial College, London. Full model details are available in 
+- <https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(12)61428-7/fulltext>
 
 
 ## IMPORTANT NOTES
