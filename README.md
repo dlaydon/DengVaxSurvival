@@ -60,7 +60,7 @@ parameter files detailed below.
 
 The executable reads in a parameter file, named `Params_ParticularModelSettings.txt`, 
 that govern which features are turned on or off,
-(initial) model parameter values, and the outputs tha are required,
+(initial) model parameter values, and the outputs that are required,
 (e.g. MCMC chains, augmented data, survival curves, attack rates, hazard ratios, seroprevalence etc.).
 Example parameter files are provided in the directory [ParamFiles](./ParamFiles).
 
@@ -121,11 +121,13 @@ expect model output to be located in [ParamFiles/Output](./ParamFiles/Output).
 The following papers are relevant to the model and trial data. Please note that some of them
 may require a subscription.
 
+- <https://elifesciences.org/articles/65131>
+- <https://science.sciencemag.org/content/353/6303/1033.abstract>
+- <https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1002181>
 - <https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(12)61428-7/fulltext>
 - <https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(14)61060-6/fulltext>
 - <https://www.nejm.org/doi/10.1056/NEJMoa1411037?url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org&rfr_dat=cr_pub++0www.ncbi.nlm.nih.gov>
 - <https://www.nejm.org/doi/full/10.1056/nejmoa1506223>
-- <https://science.sciencemag.org/content/353/6303/1033.abstract>
 
 ## Copyright and Licensing
 
